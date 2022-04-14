@@ -1,0 +1,3 @@
+[submodule "lua/nebula"]
+	path = lua/nebula
+	url = http://github.com/filipekiss/nebula.git
