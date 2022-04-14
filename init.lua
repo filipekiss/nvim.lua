@@ -1,4 +1,5 @@
 Nebula = require("nebula")
+Nebula.plugin("todo-comments")
 
 Nebula.augroup("CreateMissingFolder", {
   {
