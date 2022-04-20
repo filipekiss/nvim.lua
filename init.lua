@@ -1,13 +1,41 @@
+-- NEBULA_LOG_LEVEL = "debug"
 Nebula = require("nebula")
-Nebula.plugin("todo-comments")
+local plugin = Nebula.plugin
+local colorscheme = Nebula.colorscheme
 
-Nebula.augroup("CreateMissingFolder", {
-  {
-    events = {"BufWritePre", "FileWritePre"},
-    targets = { "*" },
-    modifiers = {"silent!"},
-    command = "call mkdir(expand('<afile>:p:h'), 'p')"
-  }
+plugin("packer")
+plugin("treesitter")
+plugin("autopairs")
+plugin("autotag")
+plugin("comment")
+plugin("telescope")
+plugin("completion")
+plugin("lsp")
+plugin("filetype")
+plugin("fix-cursor-hold")
+plugin("rainbow")
+plugin("alpha")
+plugin("gitsigns")
+plugin("neoscroll")
+plugin("which-key")
+plugin("indent-line")
+plugin("colorizer")
+plugin("null-ls")
+plugin("toggleterm")
+plugin("lualine")
+plugin("bufferline")
+plugin("devicons")
+plugin("trouble")
+plugin("todo-comments")
+plugin("neo-tree")
+colorscheme("catppuccin")
+
+Nebula.init({
+	colorscheme = "catppuccin",
+	display_line_numbers = {
+		disabled = { "", "alpha", "gitcommit", "toggleterm" },
+		enabled = {},
+		enabled_relative = {},
+	},
+	filter_lsp_servers = { "null-ls" },
 })
-
-Nebula.init()
