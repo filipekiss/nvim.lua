@@ -84,10 +84,10 @@ inoremap("!", "!<c-g>u", default_options)
 inoremap(",", ",<c-g>u", default_options)
 
 -- Use CTRL+[HJKL] to navigate between panes, instead of CTRL+W CTRL+[HJKL]
-nnoremap("<C-h>", "<C-w><C-h>", default_options)
-nnoremap("<C-j>", "<C-w><C-j>", default_options)
-nnoremap("<C-k>", "<C-w><C-k>", default_options)
-nnoremap("<C-l>", "<C-w><C-l>", default_options)
+nnoremap("<C-m>", "<C-w><C-h>", default_options)
+nnoremap("<C-n>", "<C-w><C-j>", default_options)
+nnoremap("<C-e>", "<C-w><C-k>", default_options)
+nnoremap("<C-i>", "<C-w><C-l>", default_options)
 
 -- Use | to split window vertically and _ to split it horizontally
 nnoremap(
