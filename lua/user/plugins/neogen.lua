@@ -11,7 +11,7 @@ return {
 
 		local nnoremap = require("nebula.helpers.mappings").nnoremap
 
-		nnoremap("<leader>ng", "<cmd>lua require('neogen').generate()<CR>")
+		nnoremap("<leader>dg", "<cmd>lua require('neogen').generate()<CR>")
 
 		neogen.setup(get_config("neogen"))
 	end,

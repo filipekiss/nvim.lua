@@ -84,10 +84,10 @@ inoremap("!", "!<c-g>u", default_options)
 inoremap(",", ",<c-g>u", default_options)
 
 -- Use CTRL+[HJKL] to navigate between panes, instead of CTRL+W CTRL+[HJKL]
-nnoremap("<C-m>", "<C-w><C-h>", default_options)
-nnoremap("<C-n>", "<C-w><C-j>", default_options)
-nnoremap("<C-e>", "<C-w><C-k>", default_options)
-nnoremap("<C-i>", "<C-w><C-l>", default_options)
+nnoremap("<leader>m", "<C-w><C-h>", default_options)
+nnoremap("<leader>n", "<C-w><C-j>", default_options)
+nnoremap("<leader>e", "<C-w><C-k>", default_options)
+nnoremap("<leader>i", "<C-w><C-l>", default_options)
 
 -- Use | to split window vertically and _ to split it horizontally
 nnoremap(
@@ -112,10 +112,10 @@ nnoremap("Q", "@@", default_options)
 xnoremap("p", '"_dP', default_options)
 
 -- Insert before current word under the cursor
-nnoremap("<leader>i", "bi", default_options)
+nnoremap("<leader>I", "bi", default_options)
 
 -- Insert after current word under the cursor
-nnoremap("<leader>a", "ea", default_options)
+nnoremap("<leader>A", "ea", default_options)
 
 -- make <leader>q exit terminal mode when in terminal, of course
 tnoremap("<Leader>q", "<C-\\><C-n>", default_options)
