@@ -205,6 +205,16 @@ ins_left({
 		for _, client in ipairs(clients) do
 			local filetypes = client.config.filetypes
 			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+				if client.name == "null-ls" then
+					local sources = require("null-ls.sources").get_available(
+						buf_ft
+					)
+					for _, source in pairs(sources) do
+						if source.name ~= "" then
+							table.insert(client_names, source.name)
+						end
+					end
+				end
 				if
 					not vim.tbl_contains(
 						Nebula.user_options.filter_lsp_servers or {},
