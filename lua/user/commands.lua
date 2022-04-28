@@ -34,3 +34,9 @@ add_command("EditConfig", edit_file("user"), {
 	[[-complete=customlist,v:lua.require'user.functions'.edit_config_completelist]],
 	cmd_args = { "<q-args>" },
 })
+
+add_command("EditPlugin", edit_file("user/plugins"), {
+	"-nargs=1",
+	[[-complete=customlist,v:lua.require'user.functions'.edit_plugin_completelist]],
+	cmd_args = { "<q-args>" },
+})

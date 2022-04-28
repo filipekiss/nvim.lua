@@ -152,5 +152,6 @@ functions.edit_plugin_config_completelist = edit_file_completelist(
 )
 
 functions.edit_config_completelist = edit_file_completelist("user", false)
+functions.edit_plugin_completelist = edit_file_completelist("user/plugins")
 
 return functions
