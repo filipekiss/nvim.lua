@@ -83,14 +83,20 @@ function functions.display_line_numbers(mode)
 	local change_setting = require("nebula.helpers.settings").change_setting
 	local filetype = vim.bo.filetype
 	if
-		vim.tbl_contains(Nebula.user_options.display_line_numbers.disabled, filetype)
+		vim.tbl_contains(
+			Nebula.user_options.display_line_numbers.disabled,
+			filetype
+		)
 	then
 		change_setting("relativenumber", false)
 		change_setting("number", false)
 		return
 	end
 	if
-		vim.tbl_contains(Nebula.user_options.display_line_numbers.enabled, filetype)
+		vim.tbl_contains(
+			Nebula.user_options.display_line_numbers.enabled,
+			filetype
+		)
 	then
 		change_setting("relativenumber", false)
 		change_setting("number", true)
@@ -114,5 +120,37 @@ function functions.display_line_numbers(mode)
 	change_setting("relativenumber", true)
 	change_setting("number", true)
 end
+
+local edit_file_completelist = function(folder, recursive)
+	if recursive == nil then
+		recursive = true
+	end
+	return function(lead, _, _)
+		local split_string = require("nebula.helpers.nvim").split_string
+		local config_path = vim.fn.stdpath("config") .. "/lua/" .. folder
+		local glob_pattern = "**/*.lua"
+		if not recursive then
+			glob_pattern = "*.lua"
+		end
+		local available_paths = split_string(
+			"\n",
+			vim.fn.globpath(config_path, glob_pattern)
+		)
+		local available_completions = vim.tbl_map(function(path)
+			return path:gsub(config_path .. "/", ""):gsub(".lua$", "")
+		end, available_paths)
+		local completion_list = vim.tbl_filter(function(name)
+			return vim.startswith(name, lead)
+		end, available_completions)
+		table.sort(completion_list)
+		return completion_list
+	end
+end
+
+functions.edit_plugin_config_completelist = edit_file_completelist(
+	"user/config"
+)
+
+functions.edit_config_completelist = edit_file_completelist("user", false)
 
 return functions
