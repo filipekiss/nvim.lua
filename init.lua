@@ -28,6 +28,7 @@ plugin("devicons")
 plugin("trouble")
 plugin("todo-comments")
 plugin("neo-tree")
+plugin("neogen")
 colorscheme("catppuccin")
 
 Nebula.init({
