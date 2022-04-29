@@ -40,3 +40,5 @@ add_command("EditPlugin", edit_file("user/plugins"), {
 	[[-complete=customlist,v:lua.require'user.functions'.edit_plugin_completelist]],
 	cmd_args = { "<q-args>" },
 })
+
+add_command("FormatJson", "%!python3 -m json.tool")
