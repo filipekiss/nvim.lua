@@ -144,7 +144,7 @@ augroup("NebulaQfCloseOnSelect", {
 augroup("NebulaQfCloseOnQ", {
 	{
 		events = { "FileType" },
-		targets = { "qf" },
+		targets = { "qf", "help" },
 		command = nnoremap(
 			"q",
 			":q<CR>",
