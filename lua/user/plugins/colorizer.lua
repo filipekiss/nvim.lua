@@ -8,7 +8,6 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		colorizer.setup(get_config("colorizer"))
+		colorizer.setup(Nebula.get_config("colorizer"))
 	end,
 }

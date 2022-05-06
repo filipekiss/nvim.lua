@@ -6,7 +6,6 @@ return {
 	config = function()
 		local telescope = require("telescope")
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		telescope.setup(get_config("telescope"))
+		telescope.setup(Nebula.get_config("telescope"))
 	end,
 }

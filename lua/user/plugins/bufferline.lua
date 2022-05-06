@@ -8,7 +8,6 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		bufferline.setup(get_config("bufferline"))
+		bufferline.setup(Nebula.get_config("bufferline"))
 	end,
 }

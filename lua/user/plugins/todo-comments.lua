@@ -8,6 +8,6 @@ return {
 			return
 		end
 
-		todo.setup()
+		todo.setup(Nebula.get_config("todo-comments"))
 	end,
 }

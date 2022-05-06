@@ -8,7 +8,6 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		icons.setup(get_config("devicons"))
+		icons.setup(Nebula.get_config("devicons"))
 	end,
 }

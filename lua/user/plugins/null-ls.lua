@@ -9,8 +9,7 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		null_ls.setup(get_config("null-ls"))
+		null_ls.setup(Nebula.get_config("null-ls"))
 	end,
 	requires = { plugin("plenary") },
 }

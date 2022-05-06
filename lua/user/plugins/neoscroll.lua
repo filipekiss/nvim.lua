@@ -13,7 +13,6 @@ return {
 		-- nnoremap("n", "n")
 		-- nnoremap("N", "N")
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		neoscroll.setup(get_config("neoscroll"))
+		neoscroll.setup(Nebula.get_config("neoscroll"))
 	end,
 }

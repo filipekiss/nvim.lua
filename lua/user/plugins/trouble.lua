@@ -9,7 +9,6 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		trouble.setup(get_config("trouble"))
+		trouble.setup(Nebula.get_config("trouble"))
 	end,
 }

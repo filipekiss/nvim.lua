@@ -8,7 +8,6 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		whichkey.setup(get_config("which-key"))
+		whichkey.setup(Nebula.get_config("which-key"))
 	end,
 }

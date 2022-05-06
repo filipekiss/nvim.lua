@@ -6,8 +6,7 @@ return {
 		plugin("lsp.installer"),
 	},
 	config = function()
-		local get_config = require("nebula.helpers.require").get_user_config
-		local lsp_config = get_config("lsp")
+		local lsp_config = Nebula.get_config("lsp")
 
 		for _, sign in ipairs(lsp_config.signs) do
 			vim.fn.sign_define(

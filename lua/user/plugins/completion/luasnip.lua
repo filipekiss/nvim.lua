@@ -6,7 +6,6 @@ return {
 		if not luasnip then
 			return
 		end
-		local get_config = require("nebula.helpers.require").get_user_config
-		luasnip.config.set_config(get_config("luasnip"))
+		luasnip.config.set_config(Nebula.get_config("luasnip"))
 	end,
 }

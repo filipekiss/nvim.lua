@@ -9,8 +9,6 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-
-		tsconfig.setup(get_config("treesitter"))
+		tsconfig.setup(Nebula.get_config("treesitter"))
 	end,
 }

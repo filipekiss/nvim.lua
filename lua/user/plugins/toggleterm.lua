@@ -8,7 +8,6 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		toggleterm.setup(get_config("toggleterm"))
+		toggleterm.setup(Nebula.get_config("toggleterm"))
 	end,
 }

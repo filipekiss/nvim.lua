@@ -7,8 +7,7 @@ return {
 			return
 		end
 
-		local get_config = require("nebula.helpers.require").get_user_config
-		autopairs.setup(get_config("autopairs"))
+		autopairs.setup(Nebula.get_config("autopairs"))
 
 		-- if cmp is enabled, hook autopairs with cmp
 		-- see https://github.com/windwp/nvim-autopairs#you-need-to-add-mapping-cr-on-nvim-cmp-setupcheck-readmemd-on-nvim-cmp-repo
