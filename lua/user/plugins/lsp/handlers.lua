@@ -77,6 +77,10 @@ function common.on_attach(client, bufnr)
 	lsp_mappings(bufnr)
 	lsp_highlight_document(client)
 	lsp_format(client)
+	local aerial = safe_require("aerial")
+	if aerial then
+		aerial.on_attach(client, bufnr)
+	end
 end
 
 -- https://github.com/hrsh7th/cmp-nvim-lsp#setup

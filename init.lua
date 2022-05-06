@@ -30,6 +30,7 @@ plugin("todo-comments")
 plugin("neo-tree")
 plugin("neogen")
 plugin("bufdelete")
+plugin("aerial")
 colorscheme("catppuccin")
 
 Nebula.init({
