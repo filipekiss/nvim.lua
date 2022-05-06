@@ -28,9 +28,8 @@ local function lsp_mappings(bufnr)
 	nnoremap("K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 	nnoremap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 	nnoremap("<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	nnoremap("<leader>cr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+	nnoremap("<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 	nnoremap("gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	nnoremap("<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	nnoremap(
 		"[d",
 		'<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>',
@@ -47,10 +46,9 @@ local function lsp_mappings(bufnr)
 		opts
 	)
 	nnoremap("<leader>l", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-	require("nebula.helpers.nvim").add_user_command(
-		"Format",
-		vim.lsp.buf.formatting
-	)
+	local add_user_command = require("nebula.helpers.nvim").add_user_command
+	add_user_command("CodeActions", vim.lsp.buf.code_action)
+	add_user_command("Format", vim.lsp.buf.formatting)
 end
 
 local format_on_save = function()
