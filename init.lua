@@ -40,5 +40,6 @@ Nebula.init({
 		enabled = {},
 		enabled_relative = {},
 	},
+	enable_nebula_commands = true,
 	filter_lsp_servers = { "null-ls" },
 })
