@@ -30,6 +30,7 @@ local settings = {
 	colorcolumn = "80", -- show a column at 80 chars (it must be a string)
 	cursorline = true, -- show cursorline
 	expandtab = true, -- convert tabs to spaces
+	foldlevelstart = 99, -- start with all folds open
 	ignorecase = true, -- ignore case when searching
 	smartcase = true, -- make search smarter. if all lowercase, ignore it, but if you add any uppercase letter, becomes case sensitive
 	mouse = "a", -- allow the mouse to work

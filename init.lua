@@ -31,6 +31,7 @@ plugin("neo-tree")
 plugin("neogen")
 plugin("bufdelete")
 plugin("aerial")
+plugin("pretty-fold")
 colorscheme("catppuccin")
 
 Nebula.init({

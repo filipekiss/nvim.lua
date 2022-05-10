@@ -6,6 +6,21 @@ nnoremap("<leader>fh", "<cmd>Telescope oldfiles<CR>")
 nnoremap("<leader>fg", "<cmd>Telescope live_grep<CR>")
 nnoremap("<leader>fd", "<cmd>Telescope diagnostics<CR>")
 
+-- Taken from https://github.com/David-Kunz/vim/blob/master/init.lua#L145-L155
+-- Fixes https://github.com/nvim-telescope/telescope.nvim/issues/699
+local telescope_actions_set = require("telescope.actions.set")
+local fixfolds = {
+	hidden = true,
+	attach_mappings = function(_)
+		telescope_actions_set.select:enhance({
+			post = function()
+				vim.cmd(":normal! zx")
+			end,
+		})
+		return true
+	end,
+}
+
 local actions = require("telescope.actions")
 return {
 	defaults = {
@@ -58,17 +73,15 @@ return {
 		},
 	},
 	pickers = {
-		buffers = {
+		buffers = vim.tbl_deep_extend("force", {
 			ignore_current_buffer = true,
 			sort_lastused = true,
-		},
-		-- Default configuration for builtin pickers goes here:
-		-- picker_name = {
-		--   picker_config_key = value,
-		--   ...
-		-- }
-		-- Now the picker_config_key will be applied every time you call this
-		-- builtin picker
+		}, fixfolds),
+		find_files = fixfolds,
+		git_files = fixfolds,
+		grep_string = fixfolds,
+		live_grep = fixfolds,
+		oldfiles = fixfolds,
 	},
 	extensions = {
 		-- Your extension configuration goes here:
