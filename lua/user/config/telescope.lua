@@ -1,10 +1,14 @@
 local nnoremap = require("nebula.helpers.mappings").nnoremap
 
-nnoremap("<leader><leader>", "<cmd>Telescope find_files<CR>")
+nnoremap(
+  "<leader><leader>",
+  "<cmd>lua if Nebula.user_options.is_git then require('telescope.builtin').git_files() else require('telescope.builtin').find_files() end<CR>"
+)
 nnoremap("<tab>", "<cmd>Telescope buffers<CR>")
 nnoremap("<leader>fh", "<cmd>Telescope oldfiles<CR>")
 nnoremap("<leader>fg", "<cmd>Telescope live_grep<CR>")
 nnoremap("<leader>fd", "<cmd>Telescope diagnostics<CR>")
+nnoremap("<leader>ff", "<cmd>Telescope find_files<CR>")
 
 -- Taken from https://github.com/David-Kunz/vim/blob/master/init.lua#L145-L155
 -- Fixes https://github.com/nvim-telescope/telescope.nvim/issues/699

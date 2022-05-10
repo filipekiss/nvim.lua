@@ -8,6 +8,14 @@ augroup("NebulaProjectRoot", {
 	},
 })
 
+augroup("NebulaSetIsGit", {
+	{
+		events = { "BufAdd", "BufEnter" },
+		targets = { "*" },
+		command = 'lua require("user.functions").set_isgit_option()',
+	},
+})
+
 augroup("NebulaRelativeNumber", {
 	{
 		events = { "InsertLeave", "BufAdd", "BufEnter" },

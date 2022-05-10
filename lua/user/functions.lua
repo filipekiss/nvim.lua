@@ -18,7 +18,7 @@ local function get_git_dir(path)
 	)
 	git_dir = git_dir:gsub(".$", "")
 	if git_dir == "" then
-		return vim.fn.getenv("HOME")
+		return nil
 	end
 	return git_dir
 end
@@ -72,11 +72,23 @@ local function get_project_dir(starting_dir)
 end
 
 function functions.set_project_dir()
-	local project_dir = get_project_dir(vim.fn.expand("%:p:h"))
+	local current_folder = vim.fn.expand("%:p:h")
+	local project_dir = get_project_dir(current_folder)
 	if project_dir then
 		-- change vim directory to the found project folder
 		vim.fn.chdir(project_dir)
 	end
+	vim.fn.chdir(current_folder)
+end
+
+function functions.set_isgit_option()
+	-- local project_dir = get_project_dir(vim.fn.expand("%:p:h"))
+	local is_git = get_git_dir(vim.fn.expand("%:p:h"))
+	if is_git then
+		Nebula.user_options.is_git = true
+		return
+	end
+	Nebula.user_options.is_git = false
 end
 
 function functions.display_line_numbers(mode)
