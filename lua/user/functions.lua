@@ -137,11 +137,21 @@ local edit_file_completelist = function(options)
 	end
 end
 
-functions.edit_plugin_config_completelist = edit_file_completelist(
-	"user/config"
-)
+functions.edit_plugin_config_completelist = edit_file_completelist({
+	folder = "lua/user/config",
+})
 
-functions.edit_config_completelist = edit_file_completelist("user", false)
-functions.edit_plugin_completelist = edit_file_completelist("user/plugins")
+functions.edit_config_completelist = edit_file_completelist({
+	folder = "lua/user",
+	recursive = false,
+})
+functions.edit_plugin_completelist = edit_file_completelist({
+	folder = "lua/user/plugins",
+})
+
+functions.edit_snippet_completelist = edit_file_completelist({
+	folder = "snippets",
+	extension = "json",
+})
 
 return functions
