@@ -5,37 +5,39 @@ add_command("C", "nohlsearch")
 local neovim_config = vim.fn.stdpath("config")
 add_command("EditInit", string.format("edit %s", neovim_config .. "/init.lua"))
 
-local edit_file = function(folder)
+local edit_user_file = function(folder, extension)
+	extension = extension or "lua"
 	return function(file)
 		local config_path = vim.fn.stdpath("config")
 		if file == "" or file == "init" then
-			file = config_path .. "/init.lua"
+			file = config_path .. "/init." .. extension
 			vim.api.nvim_command("edit " .. file)
 			return
 		end
-		local config_path = vim.fn.stdpath("config")
-			.. "/lua/"
+		config_path = config_path
+			.. "/"
 			.. folder
 			.. "/"
 			.. file
-			.. ".lua"
+			.. "."
+			.. extension
 		vim.api.nvim_command("edit " .. config_path)
 	end
 end
 
-add_command("EditPluginConfig", edit_file("user/config"), {
+add_command("EditPluginConfig", edit_user_file("lua/user/config"), {
 	"-nargs=1",
 	[[-complete=customlist,v:lua.require'user.functions'.edit_plugin_config_completelist]],
 	cmd_args = { "<q-args>" },
 })
 
-add_command("EditConfig", edit_file("user"), {
+add_command("EditConfig", edit_user_file("lua/user"), {
 	"-nargs=1",
 	[[-complete=customlist,v:lua.require'user.functions'.edit_config_completelist]],
 	cmd_args = { "<q-args>" },
 })
 
-add_command("EditPlugin", edit_file("user/plugins"), {
+add_command("EditPlugin", edit_user_file("lua/user/plugins"), {
 	"-nargs=1",
 	[[-complete=customlist,v:lua.require'user.functions'.edit_plugin_completelist]],
 	cmd_args = { "<q-args>" },
