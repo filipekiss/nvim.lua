@@ -33,6 +33,8 @@ plugin("bufdelete")
 plugin("aerial")
 plugin("pretty-fold")
 plugin("firenvim")
+plugin("winbar")
+plugin("sandwich")
 colorscheme("catppuccin")
 
 Nebula.init({
