@@ -6,6 +6,8 @@ return {
 		if not luasnip then
 			return
 		end
-		luasnip.config.set_config(Nebula.get_config("luasnip"))
+		luasnip.config.setup(Nebula.get_config("luasnip"))
+		local vscode_loader = require("luasnip/loaders/from_vscode")
+		vscode_loader.lazy_load()
 	end,
 }

@@ -7,14 +7,11 @@ end
 local smart_completion = require("nebula.helpers.completion").smart_completion
 
 local inoremap = require("nebula.helpers.mappings").inoremap
-inoremap("<C-n>", "<cmd>lua require('cmp').complete()<CR>")
+inoremap("<C-Space>", "<cmd>lua require('cmp').complete()<CR>")
 
-local cmp_buffer = safe_require("cmp_buffer")
+-- local cmp_buffer = safe_require("cmp_buffer")
 
 local luasnip = safe_require("luasnip")
-if luasnip then
-	require("luasnip/loaders/from_vscode").lazy_load()
-end
 
 local kind_icons = {
 	Text = "",
@@ -44,11 +41,12 @@ local kind_icons = {
 	TypeParameter = "",
 }
 
-local compare = require("cmp.config.compare")
+-- local compare = require("cmp.config.compare")
 
 return {
+	preselect = cmp.PreselectMode.None,
 	completion = {
-		autocomplete = false,
+		keyword_length = 3,
 	},
 	mapping = {
 		["<C-n>"] = cmp.mapping(smart_completion("next"), { "i", "s" }),
@@ -60,15 +58,23 @@ return {
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
 		}),
+		["<Esc>"] = cmp.mapping({
+			i = cmp.mapping.abort(),
+			c = cmp.mapping.close(),
+		}),
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true,
 		}),
+		["<Tab>"] = cmp.mapping(smart_completion("next"), { "i", "s" }),
+		["<S-Tab>"] = cmp.mapping(smart_completion("previous"), { "i", "s" }),
 	},
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body)
+			if luasnip ~= nil then
+				luasnip.lsp_expand(args.body)
+			end
 		end,
 	},
 	formatting = {
@@ -78,6 +84,7 @@ return {
 			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
 			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
 			vim_item.menu = ({
+				cmp_tabnine = "[TN]",
 				luasnip = "[Snippet]",
 				nvim_lsp = "[LSP]",
 				buffer = "[Buffer]",
@@ -88,27 +95,11 @@ return {
 	},
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "cmp_tabnine" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "path" },
 		{ name = "buffer" },
-	},
-	sorting = {
-		priority_weight = 2,
-		comparators = {
-			compare.exact,
-			function(...)
-				if cmp_buffer then
-					return cmp_buffer:compare_locality(...)
-				end
-			end,
-			compare.offset,
-			compare.score,
-			compare.kind,
-			compare.sort_text,
-			compare.length,
-			compare.order,
-		},
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
