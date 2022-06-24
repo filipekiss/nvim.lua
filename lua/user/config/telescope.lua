@@ -1,8 +1,8 @@
 local nnoremap = require("nebula.helpers.mappings").nnoremap
 
 nnoremap(
-  "<leader><leader>",
-  "<cmd>lua if Nebula.user_options.is_git then require('telescope.builtin').git_files() else require('telescope.builtin').find_files() end<CR>"
+	"<leader><leader>",
+	"<cmd>lua if Nebula.user_options.is_git then require('telescope.builtin').git_files() else require('telescope.builtin').find_files() end<CR>"
 )
 nnoremap("<tab>", "<cmd>Telescope buffers<CR>")
 nnoremap("<leader>fh", "<cmd>Telescope oldfiles<CR>")
@@ -88,10 +88,8 @@ return {
 		oldfiles = fixfolds,
 	},
 	extensions = {
-		-- Your extension configuration goes here:
-		-- extension_name = {
-		--   extension_config_key = value,
-		-- }
-		-- please take a look at the readme of the extension you want to configure
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown({}),
+		},
 	},
 }
