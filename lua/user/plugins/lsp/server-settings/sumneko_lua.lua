@@ -1,5 +1,9 @@
 -- https://github.com/sumneko/lua-language-server
 local sumneko = {
+	on_attach = function(client)
+		-- disabled so I can use stylua
+		client.resolved_capabilities.document_formatting = false
+	end,
 	settings = {
 		Lua = {
 			diagnostics = {

@@ -4,6 +4,7 @@ return {
 	"https://github.com/neovim/nvim-lspconfig",
 	requires = {
 		plugin("lsp.installer"),
+		"https://github.com/b0o/schemastore.nvim", -- to use schemas from schemastore.org
 	},
 	config = function()
 		local lsp_config = Nebula.get_config("lsp")

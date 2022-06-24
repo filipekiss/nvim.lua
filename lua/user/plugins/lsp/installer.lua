@@ -4,6 +4,10 @@ return {
 		local safe_require = require("nebula.helpers.require").safe_require
 		local lsp_installer = safe_require("nvim-lsp-installer")
 
+		if not lsp_installer then
+			return
+		end
+
 		lsp_installer.settings({
 			ui = {
 				icons = {
