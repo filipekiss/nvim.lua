@@ -25,6 +25,65 @@ local edit_user_file = function(folder, extension)
 	end
 end
 
+local edit_snippets = function(default_create_path)
+	local Cache = require("luasnip.loaders._caches")
+	local util = require("luasnip.util.util")
+	local format = function(path, _)
+		path = path:gsub(
+			vim.fn.stdpath("data") .. "/site/pack/packer/start",
+			"$PLUGINS"
+		)
+		if vim.env.HOME then
+			path = path:gsub(vim.env.HOME .. "/.config/nvim", "$CONFIG")
+		end
+		return path
+	end
+
+	local create_new_snippets_in = default_create_path
+		or vim.fn.stdpath("config") .. "/snippets/"
+
+	local fts = util.get_snippet_filetypes()
+	vim.ui.select(fts, {
+		prompt = "Select filetype:",
+	}, function(ft, _)
+		if ft then
+			local ft_paths = {}
+			local items = {}
+
+			-- concat files from all loaders for the selected filetype ft.
+			for _, cache_name in ipairs({ "vscode", "snipmate", "lua" }) do
+				for _, path in ipairs(Cache[cache_name].ft_paths[ft] or {}) do
+					local is_plugin = false
+					local pattern = "^" .. vim.fn.stdpath("data")
+					if path:match(pattern) then
+						is_plugin = true
+					end
+					local fmt_name = format(path, cache_name)
+					if fmt_name and not is_plugin then
+						table.insert(ft_paths, path)
+						table.insert(items, fmt_name)
+					end
+				end
+			end
+
+			-- prompt user again if there are multiple files providing this filetype.
+			if #ft_paths > 1 then
+				vim.ui.select(items, {
+					prompt = "Multiple files for this filetype, choose one:",
+				}, function(_, indx)
+					if indx and ft_paths[indx] then
+						vim.cmd("edit " .. ft_paths[indx])
+					end
+				end)
+			elseif ft_paths[1] then
+				vim.cmd("edit " .. ft_paths[1])
+			else
+				vim.cmd("edit " .. create_new_snippets_in .. ft .. ".lua")
+			end
+		end
+	end)
+end
+
 add_command("EditPluginConfig", edit_user_file("lua/user/config"), {
 	"-nargs=1",
 	[[-complete=customlist,v:lua.require'user.functions'.edit_plugin_config_completelist]],
@@ -42,5 +101,7 @@ add_command("EditPlugin", edit_user_file("lua/user/plugins"), {
 	[[-complete=customlist,v:lua.require'user.functions'.edit_plugin_completelist]],
 	cmd_args = { "<q-args>" },
 })
+
+add_command("EditSnippets", edit_snippets)
 
 add_command("FormatJson", "%!python3 -m json.tool")
