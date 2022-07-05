@@ -15,7 +15,6 @@ return {
 		local cmp_config = get_user_config("completion")
 		cmp.setup(cmp_config)
 	end,
-	after = { "LuaSnip" },
 	requires = {
 		{ "https://github.com/hrsh7th/cmp-buffer" }, -- buffer completions
 		{ "https://github.com/hrsh7th/cmp-path" }, -- path completions

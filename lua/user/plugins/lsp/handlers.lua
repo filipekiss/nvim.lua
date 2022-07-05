@@ -46,6 +46,7 @@ local function lsp_mappings(bufnr)
 		opts
 	)
 	nnoremap("<leader>l", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+	nnoremap("<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	local add_user_command = require("nebula.helpers.nvim").add_user_command
 	add_user_command("CodeActions", vim.lsp.buf.code_action)
 	add_user_command("Format", vim.lsp.buf.formatting)

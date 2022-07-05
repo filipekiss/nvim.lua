@@ -4,7 +4,7 @@ return {
 	keys = "<leader>c",
 	config = function()
 		local nnoremap = require("nebula.helpers.mappings").nnoremap
-		nnoremap("<leader>c", "<cmd>Bdelete<CR>")
+		nnoremap("<leader>cc", "<cmd>Bdelete<CR>")
 		nnoremap("<leader>q", "<cmd>Bdelete!<CR>")
 	end,
 }
