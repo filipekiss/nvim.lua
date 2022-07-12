@@ -17,7 +17,7 @@ local fmt = require("luasnip.extras.fmt").fmt
 return {
 	s({ trig = "@cua", dscr = "Add created_at and updated_at fields" }, {
 		t("created_at DateTime @default(now())"),
-		t(" "),
+		t({ "", "" }),
 		t("updated_at DateTime @updatedAt"),
 	}),
 	-- relation ship
