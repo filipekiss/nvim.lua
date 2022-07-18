@@ -35,15 +35,16 @@ plugin("pretty-fold")
 plugin("firenvim")
 plugin("winbar")
 plugin("sandwich")
+plugin("abolish")
 colorscheme("catppuccin")
 
 Nebula.init({
-  colorscheme = "catppuccin",
-  display_line_numbers = {
-    disabled = { "", "alpha", "gitcommit", "toggleterm" },
-    enabled = {},
-    enabled_relative = {},
-  },
-  enable_nebula_commands = true,
-  filter_lsp_servers = { "null-ls" },
+	colorscheme = "catppuccin",
+	display_line_numbers = {
+		disabled = { "", "alpha", "gitcommit", "toggleterm" },
+		enabled = {},
+		enabled_relative = {},
+	},
+	enable_nebula_commands = true,
+	filter_lsp_servers = { "null-ls" },
 })
