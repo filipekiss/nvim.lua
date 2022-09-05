@@ -13,9 +13,7 @@ return {
 		-- system and availbable in the $PATH
 		-- Right next to each plugin I added a comment with the command that you
 		-- can use to install these dependencies
-		formatting.prettier.with({
-			prefer_local = "node_modules/.bin",
-		}), -- volta install prettier
+		formatting.prettierd, -- volta install @fsouza/prettierd
 		formatting.eslint_d,
 		formatting.stylua, -- cargo install stylua
 		diagnostics.eslint,
