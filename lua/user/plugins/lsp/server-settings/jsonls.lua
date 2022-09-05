@@ -6,6 +6,10 @@ if not schemastore then
 end
 
 return {
+	on_attach = function(client)
+		-- disabled so I can use prettier/d
+		client.resolved_capabilities.document_formatting = false
+	end,
 	capabilities = {
 		textDocument = {
 			completion = {
