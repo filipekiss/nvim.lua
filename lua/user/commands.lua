@@ -84,6 +84,27 @@ local edit_snippets = function(default_create_path)
 	end)
 end
 
+local function toggle_fold_marker()
+	local foldmethod = vim.wo.foldmethod
+	local is_marker_toggle = vim.b.marker_toggle
+	if is_marker_toggle then
+		vim.b.marker_toggle = false
+		vim.wo.foldmethod = vim.b.previous_fold_method
+		print(
+			"Fold method set to "
+				.. vim.b.previous_fold_method
+				.. " (was "
+				.. foldmethod
+				.. ")"
+		)
+		return
+	end
+	vim.b.marker_toggle = true
+	vim.b.previous_fold_method = foldmethod
+	vim.wo.foldmethod = "marker"
+	print("Fold method set to marker (was " .. foldmethod .. ")")
+end
+
 add_command("EditPluginConfig", edit_user_file("lua/user/config"), {
 	"-nargs=1",
 	[[-complete=customlist,v:lua.require'user.functions'.edit_plugin_config_completelist]],
@@ -105,3 +126,5 @@ add_command("EditPlugin", edit_user_file("lua/user/plugins"), {
 add_command("EditSnippets", edit_snippets)
 
 add_command("FormatJson", "%!python3 -m json.tool")
+
+add_command("FoldMethod", toggle_fold_marker)
