@@ -1,5 +1,6 @@
 local types = require("luasnip.util.types")
 return {
+	store_selection_keys = "<Tab>",
 	ext_opts = {
 		[types.choiceNode] = {
 			active = {

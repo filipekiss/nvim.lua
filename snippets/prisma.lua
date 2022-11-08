@@ -15,51 +15,78 @@ local types = require("luasnip.util.types")
 local fmt = require("luasnip.extras.fmt").fmt
 
 return {
+	-- create and update timestamps
 	s({ trig = "@cua", dscr = "Add created_at and updated_at fields" }, {
 		t("created_at DateTime @default(now())"),
 		t({ "", "" }),
 		t("updated_at DateTime @updatedAt"),
 	}),
-	-- relation ship
+	-- id
+	s({ trig = "@id", dscr = "Add and autoincrmenting id field" }, {
+		t("id Int @id @default(autoincrement())"),
+	}),
+	-- one-to-one relationship
 	s(
-		{ trig = "@rel", dscr = "Add a relationship field" },
+		{ trig = "@oto", dscr = "Add a one-to-one relationship field" },
 		c(1, {
 			sn(nil, {
 				i(1, "field"),
 				t(" "),
 				i(2, "Model"),
-				t(' @relation("'),
-				d(3, function(args)
-					return sn(nil, {
-						i(1, args[1][1]),
-					})
-				end, { 1 }),
-				t('", fields: ['),
-				d(4, function(args, _, _, suffix)
+				t(" "),
+				t("@relation(fields: ["),
+				d(3, function(args, _, _, suffix)
 					return sn(nil, {
 						i(1, args[1][1] .. suffix),
 					})
-				end, { 1 }, { user_args = { "_id" } }),
+				end, { 1 }, { user_args = { "Id" } }),
 				t("], references: ["),
-				i(5, "id"),
+				i(4, "id"),
 				t({ "])", "" }),
-				f(function(args, _, user_arg_1)
-					return { args[1][1] .. user_arg_1 }
-				end, { 1 }, { user_args = { "_id" } }),
+				f(function(args)
+					return { args[1][1] }
+				end, { 3 }),
 				t(" "),
-				i(6, "Int"),
+				i(5, "Int"),
+				t(" @unique"),
 			}),
 			sn(nil, {
 				i(1, "field"),
 				t(" "),
 				i(2, "Model"),
-				t(' @relation("'),
-				d(3, function(args)
+				t("?"),
+			}),
+		})
+	),
+	-- one-to-many relationship
+	s(
+		{ trig = "@otm", dscr = "Add a one-to-many relationship field" },
+		c(1, {
+			sn(nil, {
+				i(1, "field"),
+				t(" "),
+				i(2, "Model"),
+				t(" "),
+				t("@relation(fields: ["),
+				d(3, function(args, _, _, suffix)
 					return sn(nil, {
-						i(1, args[1][1]),
+						i(1, args[1][1] .. suffix),
 					})
-				end, { 1 }),
-				t('")'),
+				end, { 1 }, { user_args = { "Id" } }),
+				t("], references: ["),
+				i(4, "id"),
+				t({ "])", "" }),
+				f(function(args)
+					return { args[1][1] }
+				end, { 3 }),
+				t(" "),
+				i(5, "Int"),
+			}),
+			sn(nil, {
+				i(1, "field"),
+				t(" "),
+				i(2, "Model"),
+				t("[]"),
 			}),
 		})
 	),
