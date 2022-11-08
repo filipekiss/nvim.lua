@@ -2,7 +2,7 @@ local nnoremap = require("nebula.helpers.mappings").nnoremap
 
 nnoremap(
 	"<leader><leader>",
-	"<cmd>lua if Nebula.user_options.is_git then require('telescope.builtin').git_files() else require('telescope.builtin').find_files() end<CR>"
+	"<cmd>lua if Nebula.user_options.is_git then require('telescope.builtin').git_files({ show_untracked = true }) else require('telescope.builtin').find_files() end<CR>"
 )
 nnoremap("<tab>", "<cmd>Telescope buffers<CR>")
 nnoremap("<leader>fh", "<cmd>Telescope oldfiles<CR>")
