@@ -7,7 +7,7 @@ local sumneko = {
 	settings = {
 		Lua = {
 			diagnostics = {
-				globals = { "vim" },
+				globals = { "vim", "s", "f", "d", "t", "i", "sn" },
 			},
 			workspace = {
 				library = {
