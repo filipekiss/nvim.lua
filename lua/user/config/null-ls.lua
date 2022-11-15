@@ -5,6 +5,8 @@ if not null_ls then
 end
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
+local code_actions = null_ls.builtins.code_actions
+
 return {
 	debug = true,
 	on_attach = require("user.plugins.lsp.handlers").on_attach,
@@ -16,6 +18,7 @@ return {
 		formatting.prettierd, -- volta install @fsouza/prettierd
 		formatting.eslint_d,
 		formatting.stylua, -- cargo install stylua
-		diagnostics.eslint,
+		diagnostics.eslint_d,
+		code_actions.eslint_d,
 	},
 }
