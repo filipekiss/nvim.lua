@@ -36,6 +36,7 @@ plugin("firenvim")
 plugin("winbar")
 plugin("sandwich")
 plugin("abolish")
+plugin("copilot")
 colorscheme("catppuccin")
 
 Nebula.init({
