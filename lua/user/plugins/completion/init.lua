@@ -22,6 +22,7 @@ return {
 		{ "https://github.com/saadparwaiz1/cmp_luasnip" }, -- snippet completions
 		plugin("completion.luasnip"),
 		plugin("completion.tabnine"),
+		plugin("completion.copilot"),
 		{ "https://github.com/rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
 		{ "https://github.com/hrsh7th/cmp-nvim-lua" }, -- complete neovim lua api
 		{ "https://github.com/hrsh7th/cmp-nvim-lsp" }, -- complete from lsp sources

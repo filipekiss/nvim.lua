@@ -1,8 +1,9 @@
 return {
-	"https://github.com/github/copilot.vim",
+	"https://github.com/zbirenbaum/copilot.lua",
+	event = "InsertEnter",
 	config = function()
-		local imap = require("nebula.helpers.mappings").imap
-		local opts = require("nebula.helpers.mappings").opts
-		-- imap("C-j", 'copilot#Accept("\\<CR>")', opts.expr(opts.silent()))
+		vim.schedule(function()
+			require("copilot").setup()
+		end, 100)
 	end,
 }

@@ -41,12 +41,12 @@ local kind_icons = {
 	TypeParameter = "",
 }
 
--- local compare = require("cmp.config.compare")
+local compare = require("cmp.config.compare")
 
 return {
 	preselect = cmp.PreselectMode.None,
 	completion = {
-		keyword_length = 2,
+		keyword_length = 3,
 	},
 	mapping = {
 		["<C-n>"] = cmp.mapping(smart_completion("next"), { "i", "s" }),
@@ -65,7 +65,7 @@ return {
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
+			select = false,
 		}),
 		["<Tab>"] = cmp.mapping(smart_completion("next"), { "i", "s" }),
 		["<S-Tab>"] = cmp.mapping(smart_completion("previous"), { "i", "s" }),
@@ -78,28 +78,53 @@ return {
 		end,
 	},
 	formatting = {
-		fields = { "kind", "abbr", "menu" },
+		fields = { "abbr", "kind", "menu" },
 		format = function(entry, vim_item)
 			-- Kind icons
-			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+			-- vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+			if entry.source.name == "copilot" then
+				vim_item.kind = string.format("%s %s", "", vim_item.kind)
+			else
+				vim_item.kind = string.format(
+					"%s %s",
+					kind_icons[vim_item.kind],
+					vim_item.kind
+				) -- This concatonates the icons with the name of the item kind
+			end
+
 			vim_item.menu = ({
-				cmp_tabnine = "[TN]",
 				luasnip = "[Snippet]",
 				nvim_lsp = "[LSP]",
+				cmp_tabnine = "[TN]",
 				buffer = "[Buffer]",
 				path = "[Path]",
+				copilot = "[Copilot]",
 			})[entry.source.name]
 			return vim_item
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "cmp_tabnine" },
-		{ name = "nvim_lua" },
-		{ name = "luasnip" },
-		{ name = "path" },
-		{ name = "buffer" },
+		{ name = "copilot", priority = 7 },
+		{ name = "nvim_lsp", priority = 8 },
+		-- { name = "cmp_tabnine", priority = 5 },
+		{ name = "nvim_lua", priority = 5 },
+		{ name = "luasnip", priority = 7, keyword_length = 2 },
+		-- { name = "path" },
+		-- { name = "buffer" },
+	},
+	sorting = {
+		priority_weight = 2,
+		comparators = {
+			compare.locality,
+			compare.recently_used,
+			compare.score,
+			compare.offset,
+			compare.order,
+			-- compare.exact,
+			-- compare.kind,
+			-- compare.sort_text,
+			-- compare.length,
+		},
 	},
 	confirm_opts = {
 		behavior = cmp.ConfirmBehavior.Replace,
