@@ -128,3 +128,5 @@ add_command("EditSnippets", edit_snippets)
 add_command("FormatJson", "%!python3 -m json.tool")
 
 add_command("FoldMethod", toggle_fold_marker)
+
+add_command("Del", ":call delete(@%) | bdelete!")
