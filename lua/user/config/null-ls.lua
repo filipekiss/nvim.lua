@@ -15,10 +15,24 @@ return {
 		-- system and availbable in the $PATH
 		-- Right next to each plugin I added a comment with the command that you
 		-- can use to install these dependencies
+
+		-- Formatting ---------------------------------------- {{{
 		formatting.prettierd, -- volta install @fsouza/prettierd
-		formatting.eslint_d,
+		formatting.eslint_d, -- volta install eslint_d
 		formatting.stylua, -- cargo install stylua
-		diagnostics.eslint_d,
+		-- Formatting End ------------------------------------ }}}
+
+		-- Diagnostics ---------------------------------------- {{{
+		diagnostics.eslint_d.with({
+			condition = function(utils)
+				return utils.root_has_file({ ".eslintrc.js" })
+			end,
+		}),
+		diagnostics.tsc,
+		-- Diagnostics End ------------------------------------ }}}
+
+		-- Code Actions ---------------------------------------- {{{
 		code_actions.eslint_d,
+		-- Code Actions End ------------------------------------ }}}
 	},
 }
