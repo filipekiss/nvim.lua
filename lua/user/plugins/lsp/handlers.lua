@@ -37,7 +37,7 @@ local function lsp_mappings(bufnr)
 	)
 	nnoremap(
 		"gl",
-		'<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = "rounded" })<CR>',
+		'<cmd>lua vim.lsp.diagnostic.open_float({ border = "rounded" })<CR>',
 		opts
 	)
 	nnoremap(
@@ -49,7 +49,7 @@ local function lsp_mappings(bufnr)
 	nnoremap("<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	local add_user_command = require("nebula.helpers.nvim").add_user_command
 	add_user_command("CodeActions", vim.lsp.buf.code_action)
-	add_user_command("Format", vim.lsp.buf.formatting)
+	add_user_command("Format", vim.lsp.buf.formatting_seq_sync)
 end
 
 local format_on_save = function()
