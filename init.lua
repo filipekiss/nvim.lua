@@ -37,6 +37,7 @@ plugin("winbar")
 plugin("sandwich")
 plugin("abolish")
 plugin("copilot")
+plugin("lsp_signature")
 colorscheme("catppuccin")
 
 Nebula.init({
