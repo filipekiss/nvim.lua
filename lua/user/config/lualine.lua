@@ -2,7 +2,7 @@
 -- Author: shadmansaleh / filipekiss
 -- Credit: glepnir
 
-local cat_colors = require("catppuccin.api.colors").get_colors()
+local cat_colors = require("catppuccin.palettes").get_palette()
 local colors = {
 	bg = cat_colors.black1,
 	fg = cat_colors.white,
