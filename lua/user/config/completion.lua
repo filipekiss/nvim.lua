@@ -104,13 +104,13 @@ return {
 		end,
 	},
 	sources = {
-		{ name = "copilot", priority = 7 },
 		{ name = "nvim_lsp", priority = 8 },
-		-- { name = "cmp_tabnine", priority = 5 },
-		{ name = "nvim_lua", priority = 5 },
+		{ name = "copilot", priority = 7 },
 		{ name = "luasnip", priority = 7, keyword_length = 2 },
-		-- { name = "path" },
-		-- { name = "buffer" },
+		{ name = "cmp_tabnine", priority = 5, keyword_length = 5 },
+		{ name = "nvim_lua", priority = 5 },
+		{ name = "path", priority = 3, keyword_length = 5 },
+		{ name = "buffer", priority = 2, keyword_length = 5 },
 	},
 	sorting = {
 		priority_weight = 2,
