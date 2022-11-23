@@ -3,7 +3,7 @@ local safe_require = require("nebula.helpers.require").safe_require
 local common = { capabilities = nil }
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.document_highlight then
 		local augroup = require("nebula.helpers.autocmd").augroup
 		local fn_cmd = require("nebula.helpers.nvim").fn_cmd
 		augroup("LspHighlight", {
@@ -49,20 +49,20 @@ local function lsp_mappings(bufnr)
 	nnoremap("<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 	local add_user_command = require("nebula.helpers.nvim").add_user_command
 	add_user_command("CodeActions", vim.lsp.buf.code_action)
-	add_user_command("Format", vim.lsp.buf.formatting_seq_sync)
+	add_user_command("Format", vim.lsp.buf.format)
 end
 
 local format_on_save = function()
 	local global_save = vim.g.lsp_format_on_save
 	local buffer_save = vim.b.lsp_format_on_save
 	if global_save == true or buffer_save == true then
-		vim.lsp.buf.formatting_seq_sync()
+		vim.lsp.buf.format()
 	end
 end
 
 local function lsp_format(client)
 	local fn_cmd = require("nebula.helpers.nvim").fn_cmd
-	if client.resolved_capabilities.document_formatting then
+	if client.server_capabilities.document_formatting then
 		local augroup = require("nebula.helpers.autocmd").augroup
 		augroup("NebulaLspFormatting", {
 			{
@@ -78,10 +78,6 @@ function common.on_attach(client, bufnr)
 	lsp_mappings(bufnr)
 	lsp_highlight_document(client)
 	lsp_format(client)
-	local aerial = safe_require("aerial")
-	if aerial then
-		aerial.on_attach(client, bufnr)
-	end
 end
 
 -- https://github.com/hrsh7th/cmp-nvim-lsp#setup
@@ -92,7 +88,7 @@ if not cmp_lsp then
 	return common
 end
 
-local cmp_lsp_capabilities = cmp_lsp.update_capabilities(capabilities) or {}
+local cmp_lsp_capabilities = cmp_lsp.default_capabilities(capabilities) or {}
 common.capabilities = cmp_lsp_capabilities
 
 return common
