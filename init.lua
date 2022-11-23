@@ -39,6 +39,7 @@ plugin("abolish")
 plugin("doge")
 plugin("copilot")
 plugin("lsp_signature")
+plugin("unception")
 colorscheme("catppuccin")
 
 Nebula.init({
