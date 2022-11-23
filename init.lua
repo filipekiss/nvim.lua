@@ -40,10 +40,10 @@ plugin("doge")
 plugin("copilot")
 plugin("lsp_signature")
 plugin("unception")
-colorscheme("catppuccin")
+colorscheme("spaceduck")
 
 Nebula.init({
-	colorscheme = "catppuccin",
+	colorscheme = "spaceduck",
 	display_line_numbers = {
 		disabled = { "", "alpha", "gitcommit", "toggleterm" },
 		enabled = {},
