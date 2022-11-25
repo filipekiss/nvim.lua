@@ -1,5 +1,4 @@
 local safe_require = require("nebula.helpers.require").safe_require
-
 local common = { capabilities = nil }
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
@@ -22,31 +21,62 @@ end
 local function lsp_mappings(bufnr)
 	local nnoremap = require("nebula.helpers.mappings").nnoremap
 	local make_opts = require("nebula.helpers.mappings").opts
+	local description = make_opts.desc
 	local opts = make_opts.silent({ buffer = bufnr })
-	nnoremap("gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	nnoremap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	nnoremap("K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	nnoremap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	nnoremap("<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	nnoremap("<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	nnoremap("gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 	nnoremap(
-		"[d",
-		'<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>',
-		opts
+		"gD",
+		vim.lsp.buf.declaration,
+		description("[LSP] Go to Declaration")(opts)
 	)
 	nnoremap(
-		"gl",
-		'<cmd>lua vim.lsp.diagnostic.open_float({ border = "rounded" })<CR>',
-		opts
+		"gd",
+		vim.lsp.buf.definition,
+		description("[LSP] Go to Definition")(opts)
 	)
 	nnoremap(
-		"]d",
-		'<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>',
-		opts
+		"K",
+		"<cmd>lua vim.lsp.buf.hover()<CR>",
+		description("[LSP] Show Hover")(opts)
 	)
-	nnoremap("<leader>l", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-	nnoremap("<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	nnoremap(
+		"gi",
+		"<cmd>lua vim.lsp.buf.implementation()<CR>",
+		description("[LSP] Go to Implementation")(opts)
+	)
+	nnoremap(
+		"<leader>K",
+		vim.lsp.buf.signature_help,
+		description("[LSP] Show Signature Help")(opts)
+	)
+	nnoremap(
+		"<leader>rn",
+		vim.lsp.buf.rename,
+		description("[LSP] Rename symbol")(opts)
+	)
+	nnoremap(
+		"gr",
+		vim.lsp.buf.references,
+		description("[LSP] Show References")(opts)
+	)
+	nnoremap("[d", function()
+		vim.diagnostic.goto_prev({ float = { border = "rounded" } })
+	end, description("[LSP] Go to Previous Diagnostic")(opts))
+	nnoremap("]d", function()
+		vim.diagnostic.goto_next({ float = { border = "rounded" } })
+	end, description("[LSP] Go to Next Diagnostic")(opts))
+	nnoremap("gl", function()
+		vim.diagnostic.open_float(0, { border = "rounded", scope = "line" })
+	end, description("[LSP] Show Line Diagnostics")(opts))
+	nnoremap(
+		"<leader>l",
+		vim.diagnostic.setloclist,
+		description("[LSP] Show Diagnostics List")(opts)
+	)
+	nnoremap(
+		"<leader>ca",
+		vim.lsp.buf.code_action,
+		description("[LSP] Code Actions")(opts)
+	)
 	local add_user_command = require("nebula.helpers.nvim").add_user_command
 	add_user_command("CodeActions", vim.lsp.buf.code_action)
 	add_user_command("Format", vim.lsp.buf.format)
