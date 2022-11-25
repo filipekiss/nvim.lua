@@ -112,6 +112,18 @@ end
 
 -- https://github.com/hrsh7th/cmp-nvim-lsp#setup
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+common.capabilities = capabilities
+
+local ufo = safe_require("ufo")
+
+if ufo then
+	capabilities.textDocument.foldingRange = {
+		dynamicRegistration = false,
+		lineFoldingOnly = true,
+	}
+	common.capabilities = capabilities
+end
+
 local cmp_lsp = safe_require("cmp_nvim_lsp")
 -- if cmp is not installed, return the common config up until this point
 if not cmp_lsp then
