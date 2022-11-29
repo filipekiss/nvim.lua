@@ -2,7 +2,7 @@
 local sumneko = {
 	on_attach = function(client)
 		-- disabled so I can use stylua
-		client.server_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 	end,
 	settings = {
 		Lua = {

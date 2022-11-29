@@ -2,7 +2,7 @@ local safe_require = require("nebula.helpers.require").safe_require
 local common = { capabilities = nil }
 local function lsp_highlight_document(client)
 	-- Set autocommands conditional on server_capabilities
-	if client.server_capabilities.document_highlight then
+	if client.server_capabilities.documentHighlightProvider then
 		local augroup = require("nebula.helpers.autocmd").augroup
 		local fn_cmd = require("nebula.helpers.nvim").fn_cmd
 		augroup("LspHighlight", {
@@ -92,7 +92,7 @@ end
 
 local function lsp_format(client)
 	local fn_cmd = require("nebula.helpers.nvim").fn_cmd
-	if client.server_capabilities.document_formatting then
+	if client.server_capabilities.documentFormattingProvider then
 		local augroup = require("nebula.helpers.autocmd").augroup
 		augroup("NebulaLspFormatting", {
 			{

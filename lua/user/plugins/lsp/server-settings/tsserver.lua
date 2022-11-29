@@ -10,7 +10,7 @@ end
 local tsserver = {
 	on_attach = function(client)
 		-- disable tsserver formatting, I'll use prettier with null-ls
-		client.server_capabilities.document_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
 	end,
 	init_options = {
 		preferences = {
