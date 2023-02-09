@@ -28,19 +28,25 @@ local translate_key = require("nebula.helpers.mappings").translate
 
 local footer = {
 	type = "text",
-	val = "<leader> = " .. translate_key(vim.g.mapleader),
+	val = "<leader> = "
+		.. translate_key(vim.g.mapleader)
+		.. " | https://github.com/filipekis/nebula",
 	opts = {
 		position = "center",
-		hl = "Number",
+		hl = "Comment",
 	},
 }
 
-local repo = {
+local folder = {
 	type = "text",
-	val = "https://github.com/filipekis/nebula",
+	val = function()
+		local folder = vim.fn.expand("%:p:h")
+		folder = folder:gsub(os.getenv("HOME"), "~")
+		return folder
+	end,
 	opts = {
 		position = "center",
-		hl = "Number",
+		hl = "String",
 	},
 }
 
@@ -88,6 +94,8 @@ local function button(sc, txt, keybind, keybind_opts)
 	}
 end
 
+local last_path = vim.fn.expand("%:p:h:t")
+
 local buttons = {
 	type = "group",
 	val = {
@@ -103,6 +111,11 @@ local buttons = {
 		-- button(translate_key(leader, true) .. "fr", "  Frecency/MRU"),
 		button(translate_key(leader, true) .. "fg", "  Find word"),
 		-- button(translate_key(leader, true) .. "fm", "  Jump to bookmarks"),
+		-- get last path of current directory
+		button(
+			translate_key(leader, true) .. "t",
+			"  Browse " .. last_path .. " folder"
+		),
 		-- button(translate_key(leader, true) .. "sl", "  Open last session"),
 		button("q", "  Quit Neovim", "<cmd>quit! <CR>"),
 	},
@@ -116,16 +129,40 @@ local section = {
 	buttons = buttons,
 	footer = footer,
 	repo = repo,
+	folder = folder,
 }
+
+local occupied_lines = 29 -- this is the sum of all sections configure above
+local total_sections = 4
+local winheight = vim.fn.winheight(0)
+-- calculate an even spacing to use based on winheight and occupied_lines and
+-- total_sections
+local spacing = math.floor((winheight - occupied_lines) / total_sections)
+-- calculate the remaining spacing after summing the occupied_lines and the
+-- spacing used
+local remaining_spacing = math.floor(
+	winheight
+		- occupied_lines
+		- (spacing * (total_sections - 1))
+		+ spacing / (total_sections - 1)
+)
+
+--[[ local headerPadding = vim.fn.max({ ]]
+--[[ 	2, ]]
+--[[ 	vim.fn.floor(vim.fn.winheight(0) * marginTopPercent), ]]
+--[[ }) ]]
 
 local config = {
 	layout = {
-		{ type = "padding", val = 2 },
-		section.header,
-		{ type = "padding", val = 2 },
-		section.buttons,
-		section.footer,
-		section.repo,
+		section.header, -- 11
+		-- add a padding section
+		{ type = "padding", val = spacing },
+		section.buttons, -- 23 (12)
+		{ type = "padding", val = spacing },
+		{ type = "padding", val = spacing },
+		section.folder, -- 25
+		{ type = "padding", val = remaining_spacing },
+		section.footer, -- 26
 	},
 	opts = {
 		margin = 5,
