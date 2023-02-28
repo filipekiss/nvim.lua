@@ -41,6 +41,8 @@ plugin("copilot")
 plugin("lsp_signature")
 plugin("unception")
 plugin("fidget")
+plugin("hlargs")
+colorscheme("catppuccin")
 colorscheme("spaceduck")
 
 Nebula.init({
