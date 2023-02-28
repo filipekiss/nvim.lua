@@ -94,8 +94,8 @@ return {
 
 			vim_item.menu = ({
 				luasnip = "[Snippet]",
-				nvim_lsp = "[LSP]",
-				cmp_tabnine = "[TN]",
+				--[[ nvim_lsp = "[LSP]", ]]
+				--[[ cmp_tabnine = "[TN]", ]]
 				buffer = "[Buffer]",
 				path = "[Path]",
 				copilot = "[Copilot]",
@@ -104,13 +104,13 @@ return {
 		end,
 	},
 	sources = {
-		{ name = "nvim_lsp", priority = 8 },
+		--[[ { name = "nvim_lsp", priority = 8 }, ]]
 		{ name = "copilot", priority = 7 },
 		{ name = "luasnip", priority = 7, keyword_length = 2 },
-		{ name = "cmp_tabnine", priority = 5, keyword_length = 5 },
+		--[[ { name = "cmp_tabnine", priority = 5, keyword_length = 10 }, ]]
 		{ name = "nvim_lua", priority = 5 },
 		{ name = "path", priority = 3, keyword_length = 5 },
-		{ name = "buffer", priority = 2, keyword_length = 5 },
+		--[[ { name = "buffer", priority = 2, keyword_length = 5 }, ]]
 	},
 	sorting = {
 		priority_weight = 2,
