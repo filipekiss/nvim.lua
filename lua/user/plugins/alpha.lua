@@ -8,6 +8,8 @@ return {
 			return
 		end
 
+		require("alpha.term")
+
 		alpha.setup(Nebula.get_config("alpha"))
 	end,
 }

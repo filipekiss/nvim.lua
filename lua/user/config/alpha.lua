@@ -1,26 +1,18 @@
 local if_nil = vim.F.if_nil
 
-local nebula_art = {
-	[[                                            888            ]],
-	[[                                            888            ]],
-	[[                                            888            ]],
-	[[ 88888b.  888  888 888d888 888d888 88888b.  888  .d88b.    ]],
-	[[ 888 "88b 888  888 888P"   888P"   888 "88b 888 d8P  Y8b   ]],
-	[[ 888  888 888  888 888     888     888  888 888 88888888   ]],
-	[[ 888 d88P Y88b 888 888     888     888 d88P 888 Y8b.       ]],
-	[[ 88888P"   "Y88888 888     888     88888P"  888  "Y8888    ]],
-	[[ 888                               888                     ]],
-	[[ 888                               888                     ]],
-	[[ 888                               888                     ]],
-}
-
-local default_header = {
-	type = "text",
-	val = nebula_art,
+local header = {
+	type = "terminal",
+	command = "cat | lolcat "
+		.. os.getenv("HOME")
+		.. "/.config/nvim/banner.txt",
+	width = 93,
+	height = 6,
 	opts = {
-		position = "center",
-		hl = "Type",
-		-- wrap = "overflow";
+		redraw = true,
+		window_config = {
+			relative = "win",
+			row = 4,
+		},
 	},
 }
 
@@ -125,14 +117,13 @@ local buttons = {
 }
 
 local section = {
-	header = default_header,
+	header = header,
 	buttons = buttons,
 	footer = footer,
-	repo = repo,
 	folder = folder,
 }
 
-local occupied_lines = 29 -- this is the sum of all sections configure above
+local occupied_lines = 21 -- this is the sum of all sections configure above
 local total_sections = 4
 local winheight = vim.fn.winheight(0)
 -- calculate an even spacing to use based on winheight and occupied_lines and
@@ -151,18 +142,19 @@ local remaining_spacing = math.floor(
 --[[ 	2, ]]
 --[[ 	vim.fn.floor(vim.fn.winheight(0) * marginTopPercent), ]]
 --[[ }) ]]
-
+--
+local midspacer = { type = "padding", val = spacing }
+local finalspacer = { type = "padding", val = remaining_spacing }
 local config = {
 	layout = {
-		section.header, -- 11
-		-- add a padding section
-		{ type = "padding", val = spacing },
-		section.buttons, -- 23 (12)
-		{ type = "padding", val = spacing },
-		{ type = "padding", val = spacing },
-		section.folder, -- 25
-		{ type = "padding", val = remaining_spacing },
-		section.footer, -- 26
+		midspacer,
+		section.header,
+		midspacer,
+		section.buttons,
+		midspacer,
+		finalspacer,
+		section.folder,
+		section.footer,
 	},
 	opts = {
 		margin = 5,
