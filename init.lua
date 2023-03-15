@@ -45,7 +45,7 @@ colorscheme("catppuccin")
 colorscheme("spaceduck")
 
 Nebula.init({
-	colorscheme = "spaceduck",
+	colorscheme = "catppuccin",
 	display_line_numbers = {
 		disabled = { "", "alpha", "gitcommit", "toggleterm" },
 		enabled = {},
