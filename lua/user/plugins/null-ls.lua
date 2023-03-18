@@ -11,5 +11,5 @@ return {
 
 		null_ls.setup(Nebula.get_config("null-ls"))
 	end,
-	requires = { plugin("plenary") },
+	requires = { plugin("plenary"), plugin("mason.null-ls") },
 }
