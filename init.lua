@@ -40,3 +40,5 @@ require("lazy").setup({
 		fallback = true,
 	},
 })
+
+require "_"
