@@ -1,3 +1,5 @@
+require("_")
+
 -- install lazy.nvim if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -27,7 +29,6 @@ require("lazy").setup({
 			},
 			opts = {
 				colorscheme = "catppuccin",
-				debug = true,
 			},
 		},
 		{
@@ -40,5 +41,3 @@ require("lazy").setup({
 		fallback = true,
 	},
 })
-
-require "_"

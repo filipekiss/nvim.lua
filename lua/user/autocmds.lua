@@ -1,11 +1,5 @@
 local functions = Idle.load("functions")
-local function augroup(name, clear)
-	return vim.api.nvim_create_augroup(
-		Idle.namespace .. name,
-		{ clear = clear ~= false or false }
-	)
-end
-
+local augroup = require("idle.helpers").augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd({ "FocusGained", "TermClose", "TermLeave" }, {

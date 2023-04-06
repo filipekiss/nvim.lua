@@ -1,6 +1,5 @@
 local Idle = require("idle")
 local M = {}
-local current_lcd = vim.fn.getcwd()
 
 local function get_git_dir(path)
 	local git_dir = vim.fn.system(
@@ -32,7 +31,6 @@ end
 local function get_project_dir()
 	local default_project_root_files = {
 		"package.json",
-		"nx.json",
 		".git",
 	}
 	local project_root_files = _.TableConcat(
@@ -49,6 +47,7 @@ end
 
 function M.set_project_dir()
 	local project_dir = get_project_dir()
+	local current_lcd = vim.fn.getcwd()
 	if project_dir and project_dir ~= current_lcd then
 		-- change vim directory to the found project folder
 		vim.fn.chdir(project_dir)

@@ -1,0 +1,15 @@
+{
+    "workspace.library": [
+        "/Users/filipekiss/.local/share/nvim/lazy/neodev.nvim/types/stable",
+        "/opt/homebrew/Cellar/neovim/0.8.1/share/nvim/runtime/lua",
+        "/Users/filipekiss/.local/share/nvim/lazy/nvim-lspconfig/lua",
+        "/Users/filipekiss/.local/share/nvim/lazy/neodev.nvim/lua",
+        "/Users/filipekiss/.local/share/nvim/lazy/catppuccin/lua",
+        "/Users/filipekiss/.local/share/nvim/lazy/mason.nvim/lua",
+        "/Users/filipekiss/.local/share/nvim/lazy/lazy.nvim/lua",
+        "/Users/filipekiss/.local/share/nvim/lazy/mason-lspconfig.nvim/lua",
+        "/Users/filipekiss/code/filipekiss/idle.nvim/lua",
+        "/Users/filipekiss/.config/nvim.bak/lua",
+        "${3rd}/luv/library"
+    ]
+}

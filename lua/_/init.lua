@@ -1,6 +1,5 @@
-_G.P = function(v)
-	print(vim.inspect(v))
-	return v
+_G.__P = function(v)
+	return vim.pretty_print(v)
 end
 
 _G._ = {}
