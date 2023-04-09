@@ -1,3 +1,5 @@
+require("_")
+
 -- install lazy.nvim if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -27,7 +29,16 @@ require("lazy").setup({
 			},
 			opts = {
 				colorscheme = "catppuccin",
-				debug = true,
+				-- extra options I use throughout my configuration
+				-- having them here makes it easier to change settings without needing
+				-- to remember where I need to update them
+				rooter = {
+					exclude = {'', 'help', 'man'} -- don't run rooter on these filetypes
+				},
+				-- disable smart numbering for the following filetypes and use…
+				nonumber = {'gitcommit'}, -- …nonumber norelativenumber
+				number = {}, -- …number norelativenumber,
+				relativenumber = {'man', 'help'}, -- …number relativenumber
 			},
 		},
 		{
@@ -40,5 +51,3 @@ require("lazy").setup({
 		fallback = true,
 	},
 })
-
-require "_"
