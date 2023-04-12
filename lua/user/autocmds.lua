@@ -1,6 +1,6 @@
 local functions = Idle.load("functions")
 local rooter = Idle.load("functions.rooter")
-local augroup = require("idle.helpers").augroup
+local augroup = require("idle.helpers.autocmd").augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
@@ -84,7 +84,7 @@ autocmd({ "InsertLeave", "BufAdd", "BufEnter", "InsertEnter" }, {
 	end,
 })
 
-autocmd({"VimEnter", "BufReadPost", "BufEnter" }, {
+autocmd({ "VimEnter", "BufReadPost", "BufEnter" }, {
 	desc = "set project directory",
 	group = augroup("project_dir"),
 	pattern = { "*" },
