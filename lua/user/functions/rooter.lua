@@ -47,7 +47,7 @@ local function get_project_dir()
 end
 
 local function table_has(haystack, needle)
-	for _,value in ipairs(haystack) do
+	for _, value in ipairs(haystack) do
 		if value == needle then
 			return true
 		end
@@ -55,20 +55,21 @@ local function table_has(haystack, needle)
 	return false
 end
 
-
 local buffer_table = require("idle.helpers.table").buffer_table
 
 local Rooter = buffer_table({
 	root_dir = "rooter_dir",
-	excluded = "rooter_excluded"
+	excluded = "rooter_excluded",
 })
 
 function M.set_project_dir()
-	local excluded_filetypes = Idle.options.rooter and Idle.options.rooter.exclude or {''}
+	local excluded_filetypes = Idle.options.rooter
+			and Idle.options.rooter.exclude
+		or { "" }
 	local has_filetype = table_has(excluded_filetypes, vim.bo.filetype)
 	-- if we already excluded this buffer, just skip
 	if Rooter.excluded then
-	 return
+		return
 	end
 	-- if we are excluding the buffer for the first time, add the variable and
 	-- then skip
@@ -84,7 +85,11 @@ function M.set_project_dir()
 
 	local project_dir = get_project_dir()
 	local current_lcd = vim.fn.getcwd()
-	if project_dir and project_dir ~= current_lcd and Rooter.root_dir == nil then
+	if
+		project_dir
+		and project_dir ~= current_lcd
+		and Rooter.root_dir == nil
+	then
 		-- change vim directory to the found project folder
 		Rooter.root_dir = project_dir
 		vim.api.nvim_set_current_dir(Rooter.root_dir)
@@ -93,6 +98,5 @@ function M.set_project_dir()
 		return
 	end
 end
-
 
 return M

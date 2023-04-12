@@ -50,4 +50,76 @@ function M.toggle_fold_method()
 	)
 end
 
+-- taken from LazyVim - https://github.com/LazyVim/LazyVim/blob/5d6f0d58d5daf2f87ea9f0a49170103925d1b528/lua/lazyvim/util/init.lua#L154
+function M.lazy_notify()
+	local notifs = {}
+	local function temp(...)
+		table.insert(notifs, vim.F.pack_len(...))
+	end
+
+	local orig = vim.notify
+	vim.notify = temp
+
+	local timer = vim.loop.new_timer()
+	local check = vim.loop.new_check()
+
+	local replay = function()
+		---@diagnostic disable-next-line: need-check-nil
+		timer:stop()
+		---@diagnostic disable-next-line: need-check-nil
+		check:stop()
+		if vim.notify == temp then
+			vim.notify = orig -- put back the original notify if needed
+		end
+		vim.schedule(function()
+			---@diagnostic disable-next-line: no-unknown
+			for _, notif in ipairs(notifs) do
+				vim.notify(vim.F.unpack_len(notif))
+			end
+		end)
+	end
+
+	-- wait till vim.notify has been replaced
+	---@diagnostic disable-next-line: need-check-nil
+	check:start(function()
+		if vim.notify ~= temp then
+			replay()
+		end
+	end)
+	-- or if it took more than 500ms, then something went wrong
+	---@diagnostic disable-next-line: need-check-nil
+	timer:start(500, 0, replay)
+end
+
+-- taken from AstroVim
+function M.get_hlgroup(name, fallback)
+	if vim.fn.hlexists(name) == 1 then
+		local hl
+		---@diagnostic disable: undefined-field
+		if vim.api.nvim_get_hl then -- check for new neovim 0.9 API
+			hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+			---@diagnostic enable: undefined-field
+			if not hl.fg then
+				hl.fg = "NONE"
+			end
+			if not hl.bg then
+				hl.bg = "NONE"
+			end
+		else
+			hl = vim.api.nvim_get_hl_by_name(name, vim.o.termguicolors)
+			if not hl.foreground then
+				hl.foreground = "NONE"
+			end
+			if not hl.background then
+				hl.background = "NONE"
+			end
+			hl.fg, hl.bg = hl.foreground, hl.background
+			hl.ctermfg, hl.ctermbg = hl.fg, hl.bg
+			hl.sp = hl.special
+		end
+		return hl
+	end
+	return fallback or {}
+end
+
 return M

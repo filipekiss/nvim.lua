@@ -12,6 +12,8 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+require("user.functions").lazy_notify()
+
 -- setup lazy to load idle.nvim and then the plugins in the lua/plugin folder
 -- see :h lazy.nvim.txt
 require("lazy").setup({
@@ -33,12 +35,12 @@ require("lazy").setup({
 				-- having them here makes it easier to change settings without needing
 				-- to remember where I need to update them
 				rooter = {
-					exclude = {'', 'help', 'man'} -- don't run rooter on these filetypes
+					exclude = { "", "help", "man" }, -- don't run rooter on these filetypes
 				},
 				-- disable smart numbering for the following filetypes and use…
-				nonumber = {'gitcommit'}, -- …nonumber norelativenumber
+				nonumber = { "gitcommit" }, -- …nonumber norelativenumber
 				number = {}, -- …number norelativenumber,
-				relativenumber = {'man', 'help'}, -- …number relativenumber
+				relativenumber = { "man", "help" }, -- …number relativenumber
 			},
 		},
 		{
