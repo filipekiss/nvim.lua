@@ -41,10 +41,15 @@ require("lazy").setup({
 				nonumber = { "gitcommit" }, -- …nonumber norelativenumber
 				number = {}, -- …number norelativenumber,
 				relativenumber = { "man", "help" }, -- …number relativenumber
+				-- treesitter options
+				treesitter = {},
 			},
 		},
 		{
 			import = "plugins",
+		},
+		{
+			import = "plugins.lang",
 		},
 	},
 	dev = {
