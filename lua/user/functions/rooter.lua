@@ -63,39 +63,32 @@ local Rooter = buffer_table({
 })
 
 function M.set_project_dir()
+	local change_root = vim.api.nvim_set_current_dir
 	local excluded_filetypes = Idle.options.rooter
 			and Idle.options.rooter.exclude
 		or { "" }
-	local has_filetype = table_has(excluded_filetypes, vim.bo.filetype)
+	local is_excluded_filetype = table_has(excluded_filetypes, vim.bo.filetype)
 	-- if we already excluded this buffer, just skip
 	if Rooter.excluded then
 		return
 	end
 	-- if we are excluding the buffer for the first time, add the variable and
 	-- then skip
-	if has_filetype then
+	if is_excluded_filetype then
 		Rooter.excluded = true
 		return
 	end
-	-- if we already set it for this buffer, don't reset
-	-- maybe we need to check if the path changed? let's see
+	-- if we already set it for this buffer, use the set value
 	if Rooter.root_dir then
+		change_root(Rooter.root_dir)
 		return
 	end
 
-	local project_dir = get_project_dir()
-	local current_lcd = vim.fn.getcwd()
-	if
-		project_dir
-		and project_dir ~= current_lcd
-		and Rooter.root_dir == nil
-	then
-		-- change vim directory to the found project folder
-		Rooter.root_dir = project_dir
-		vim.api.nvim_set_current_dir(Rooter.root_dir)
-		current_lcd = Rooter.root_dir
-		Util.info("Changed project folder to " .. Rooter.root_dir)
-		return
+	-- this is the first time we are here, let's update the root dir
+	Rooter.root_dir = get_project_dir()
+	if Rooter.root_dir then
+		change_root(Rooter.root_dir)
+		Util.info(Rooter.root_dir, { title = "rooter" })
 	end
 end
 
