@@ -40,7 +40,7 @@ local function get_project_dir()
 	)
 	for _, file in pairs(project_root_files) do
 		local result = find_root_folder(file)
-		if result then
+		if result and not result:find(":///") then
 			return result
 		end
 	end
