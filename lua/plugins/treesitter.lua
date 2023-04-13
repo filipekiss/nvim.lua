@@ -39,6 +39,7 @@ return {
 				"tsx",
 				"typescript",
 				"vim",
+				"vimdoc",
 			},
 		},
 		config = function(_, opts)
