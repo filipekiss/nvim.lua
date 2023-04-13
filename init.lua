@@ -38,11 +38,15 @@ require("lazy").setup({
 					exclude = { "", "help", "man", "gitcommit" }, -- don't run rooter on these filetypes
 				},
 				-- disable smart numbering for the following filetypes and use…
-				nonumber = { "gitcommit" }, -- …nonumber norelativenumber
-				number = {}, -- …number norelativenumber,
-				relativenumber = { "man", "help" }, -- …number relativenumber
+				nonumber = { "gitcommit" }, -- …nonumber norelativenumber (never show numbers)
+				number = {}, -- …number norelativenumber (always show absolute number)
+				relativenumber = { "man", "help" }, -- …number relativenumber (always show relative numbers)
 				-- treesitter options
 				treesitter = {},
+				-- cursed options
+				cursed = {
+					delay = 500,
+				},
 			},
 		},
 		{
@@ -52,9 +56,12 @@ require("lazy").setup({
 			import = "plugins.lang",
 		},
 	},
+	---@diagnostic disable-next-line: assign-type-mismatch
 	dev = {
 		path = "~/code/filipekiss",
 		patterns = { "filipekiss" },
 		fallback = true,
 	},
 })
+
+require("user.functions.cursed").setup_smart_cursorline()
