@@ -12,7 +12,17 @@ return {
 			}, -- used to develop plugins and give context awareness to vim config globals
 		},
 		opts = {
-			servers = {},
+			servers = {
+				lua_ls = {
+					settings = {
+						Lua = {
+							workspace = {
+								checkThirdParty = false,
+							},
+						},
+					},
+				},
+			},
 			setup = {},
 		},
 		config = function(_, opts)
