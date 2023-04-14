@@ -22,9 +22,12 @@ return {
 			render = "compact",
 		},
 		init = function()
-			require("idle.helpers.autocmd").on_very_lazy(function()
-				vim.notify = require("notify")
-			end, require("idle.helpers.autocmd").augroup("notify"))
+			require("idle.helpers.autocmd").create_user_autocmd("VeryLazy", {
+				callback = function()
+					vim.notify = require("notify")
+				end,
+				group = require("idle.helpers.autocmd").augroup("notify", true),
+			})
 		end,
 		config = function(_, opts)
 			local options = vim.tbl_deep_extend(
