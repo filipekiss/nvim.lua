@@ -34,4 +34,13 @@ return {
 			end,
 		},
 	},
+	-- cursed.nvim
+	{
+		"filipekiss/cursed.nvim",
+		opts = {
+			delay = 500,
+			smart_cursorline = true,
+		},
+		config = true,
+	},
 }

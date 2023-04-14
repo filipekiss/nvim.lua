@@ -41,12 +41,6 @@ require("lazy").setup({
 				nonumber = { "gitcommit" }, -- …nonumber norelativenumber (never show numbers)
 				number = {}, -- …number norelativenumber (always show absolute number)
 				relativenumber = { "man", "help" }, -- …number relativenumber (always show relative numbers)
-				-- treesitter options
-				treesitter = {},
-				-- cursed options
-				cursed = {
-					delay = 500,
-				},
 			},
 		},
 		{
@@ -63,5 +57,3 @@ require("lazy").setup({
 		fallback = true,
 	},
 })
-
-require("user.functions.cursed").setup_smart_cursorline()
