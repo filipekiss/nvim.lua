@@ -30,7 +30,7 @@ require("lazy").setup({
 				{ "folke/lazy.nvim" },
 			},
 			opts = {
-				colorscheme = "catppuccin",
+				colorscheme = "duskfox",
 				-- extra options I use throughout my configuration
 				-- having them here makes it easier to change settings without needing
 				-- to remember where I need to update them
