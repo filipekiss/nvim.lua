@@ -28,6 +28,7 @@ return {
 		config = function(_, opts)
 			Idle.load("functions.lsp").attach_autocmd(function(client, buffer)
 				require("plugins.lsp.keymaps").on_attach(client, buffer)
+				require("plugins.lsp.format").on_attach(client, buffer)
 			end)
 
 			local servers = opts.servers
@@ -79,4 +80,19 @@ return {
 			},
 		},
 	},
+	-- null-ls
+	{
+  "jose-elias-alvarez/null-ls.nvim",
+  event = { "BufReadPre", "BufNewFile" },
+  dependencies = { "mason.nvim" },
+  opts = function()
+    local nls = require("null-ls")
+    return {
+      root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+      sources = {
+        nls.builtins.formatting.stylua,
+      },
+    }
+  end,
+}
 }
