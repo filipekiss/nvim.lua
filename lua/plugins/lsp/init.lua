@@ -31,6 +31,15 @@ return {
 				require("plugins.lsp.format").on_attach(client, buffer)
 			end)
 
+			-- diagnostics
+			for name, icon in pairs(Idle.options.icons.diagnostics) do
+				name = "DiagnosticSign" .. name
+				vim.fn.sign_define(
+					name,
+					{ text = icon, texthl = name, numhl = "" }
+				)
+			end
+
 			local servers = opts.servers
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 
@@ -82,17 +91,22 @@ return {
 	},
 	-- null-ls
 	{
-  "jose-elias-alvarez/null-ls.nvim",
-  event = { "BufReadPre", "BufNewFile" },
-  dependencies = { "mason.nvim" },
-  opts = function()
-    local nls = require("null-ls")
-    return {
-      root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-      sources = {
-        nls.builtins.formatting.stylua,
-      },
-    }
-  end,
-}
+		"jose-elias-alvarez/null-ls.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = { "mason.nvim" },
+		opts = function()
+			local nls = require("null-ls")
+			return {
+				root_dir = require("null-ls.utils").root_pattern(
+					".null-ls-root",
+					".neoconf.json",
+					"Makefile",
+					".git"
+				),
+				sources = {
+					nls.builtins.formatting.stylua,
+				},
+			}
+		end,
+	},
 }

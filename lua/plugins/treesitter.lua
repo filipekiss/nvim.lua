@@ -3,6 +3,43 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		version = false, -- last release is way too old and doesn't work on Windows
 		build = ":TSUpdate",
+		dependencies = {
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				init = function()
+					-- PERF: no need to load the plugin, if we only need its queries for mini.ai
+					local plugin =
+						require("lazy.core.config").spec.plugins["nvim-treesitter"]
+					local opts = require("lazy.core.plugin").values(
+						plugin,
+						"opts",
+						false
+					)
+					local enabled = false
+					if opts.textobjects then
+						for _, mod in ipairs({
+							"move",
+							"select",
+							"swap",
+							"lsp_interop",
+						}) do
+							if
+								opts.textobjects[mod]
+								and opts.textobjects[mod].enable
+							then
+								enabled = true
+								break
+							end
+						end
+					end
+					if not enabled then
+						require("lazy.core.loader").disable_rtp_plugin(
+							"nvim-treesitter-textobjects"
+						)
+					end
+				end,
+			},
+		},
 		event = { "BufReadPost", "BufNewFile" },
 		keys = {
 			{ "<Tab>", desc = "Increment selection" },
@@ -53,5 +90,17 @@ return {
 			vim.wo.foldmethod = "expr"
 			vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 		end,
+	},
+	{
+		"https://github.com/nvim-treesitter/playground",
+		dependencies = "nvim-treesitter",
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup({
+				playgroung = opts,
+			})
+		end,
+		opts = {
+			enable = true,
+		},
 	},
 }
