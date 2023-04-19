@@ -16,7 +16,8 @@ require("user.functions").lazy_notify()
 
 -- setup lazy to load idle.nvim and then the plugins in the lua/plugin folder
 -- see :h lazy.nvim.txt
-require("lazy").setup({
+---@type LazyConfig
+local lazyOptions = {
 	spec = {
 		{
 			"filipekiss/idle.nvim",
@@ -99,10 +100,10 @@ require("lazy").setup({
 			import = "plugins.lang",
 		},
 	},
-	---@diagnostic disable-next-line: assign-type-mismatch
 	dev = {
 		path = "~/code/filipekiss",
 		patterns = { "filipekiss" },
 		fallback = true,
 	},
-})
+}
+require("lazy").setup(lazyOptions)
