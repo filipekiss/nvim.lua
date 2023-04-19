@@ -1,4 +1,5 @@
-_G._ = {}
+local _ = {}
+
 function _.TableConcat(t1, t2)
 	for i = 1, #t2 do
 		t1[#t1 + 1] = t2[i]
@@ -17,3 +18,5 @@ function _.P(v)
 	end
 	return vim.pretty_print(v)
 end
+
+_G._ = _
