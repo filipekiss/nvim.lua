@@ -143,8 +143,10 @@ map(
 	{ expr = true, silent = true, desc = "Split pane horizontally" }
 )
 
--- List current buffers to cycle
-map("n", "<tab>", ":silent ls<CR>:b<space>")
+-- List current buffers to cycle, but only if telescope is not installed
+if not Idle.has_plugin("telescope.nvim") then
+	map("n", "<tab>", ":silent ls<CR>:b<space>")
+end
 
 -- repeat last macro (use qq to record, @q to run the first time and Q to run it
 map("n", "Q", "@@")
