@@ -9,6 +9,9 @@ return {
 			"rafamadriz/friendly-snippets",
 			config = function()
 				require("luasnip.loaders.from_vscode").lazy_load()
+				require("luasnip.loaders.from_lua").lazy_load({
+					paths = "./lua/user/snippets",
+				})
 			end,
 		},
 		opts = {
@@ -18,29 +21,28 @@ return {
 		-- stylua: ignore
 		keys = {
 			{
-				"<tab>",
+				"<c-s>",
 				function()
-					return require("luasnip").jumpable(1)
-							and "<Plug>luasnip-jump-next"
-						or "<tab>"
+					return require("luasnip").expandable()
+							and "<Plug>luasnip-expand-snippet"
+						or "<c-s>"
 				end,
 				expr = true,
 				silent = true,
 				mode = "i",
+				desc = "[LuaSnip] Expand Snippet",
 			},
 			{
-				"<tab>",
+				"<c-m>",
 				function()
-					require("luasnip").jump(1)
+					return require("luasnip").choice_active()
+							and "<Plug>luasnip-next-choice"
+						or "<c-m>"
 				end,
-				mode = "s",
-			},
-			{
-				"<s-tab>",
-				function()
-					require("luasnip").jump(-1)
-				end,
+				expr = true,
+				silent = true,
 				mode = { "i", "s" },
+				desc = "[LuaSnip] Next Choice",
 			},
 		},
 	},
@@ -59,8 +61,6 @@ return {
 		},
 		init = function()
 			require("plugins.coding.ui")
-			local map = require("idle.helpers.mapping").map
-			map("i", "<C-Space>", "<cmd>lua require('cmp').complete()<CR>")
 		end,
 		opts = function()
 			local cmp = require("cmp")
@@ -81,8 +81,8 @@ return {
 					},
 				},
 				completion = {
+					autocomplete = false,
 					completeopt = "menu,menuone,noinsert,noselect",
-					keyword_length = 3,
 				},
 				snippet = {
 					expand = function(args)
@@ -113,7 +113,6 @@ return {
 						i = cmp.mapping.abort(),
 						c = cmp.mapping.close(),
 					}),
-					["<C-Space>"] = cmp.mapping.complete(),
 					["<CR>"] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Replace,
 						select = false,
