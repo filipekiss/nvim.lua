@@ -17,19 +17,33 @@ end
 local function find_root_folder(filename)
 	local current_folder = vim.fn.expand("%:p:h")
 	if filename == ".git" then
-		return get_git_dir(current_folder)
+		local git_dir = get_git_dir(current_folder)
+		if git_dir then
+			return {
+				path = git_dir,
+				is_git = true,
+			}
+		end
+		return {
+			path = current_folder,
+			is_git = false,
+		}
 	end
 	local found = vim.fn.findfile(
 		filename,
 		vim.fn.expand("%:p") .. ";" .. vim.fn.getenv("HOME")
 	)
 	if found ~= "" then
-		return vim.fn.fnamemodify(found, ":p:h")
+		return { path = vim.fn.fnamemodify(found, ":p:h"), is_git = false }
 	end
 	return nil
 end
 
-local function get_project_dir()
+local function is_valid_path(path)
+	return path:find("^/")
+end
+
+function M.get_project_dir()
 	local default_project_root_files = {
 		"package.json",
 		".git",
@@ -40,10 +54,11 @@ local function get_project_dir()
 	)
 	for _, file in pairs(project_root_files) do
 		local result = find_root_folder(file)
-		if result and not result:find(":///") then
+		if result and result.path and is_valid_path(result.path) then
 			return result
 		end
 	end
+	return nil
 end
 
 local function table_has(haystack, needle)
@@ -85,10 +100,13 @@ function M.set_project_dir()
 	end
 
 	-- this is the first time we are here, let's update the root dir
-	Rooter.root_dir = get_project_dir()
-	if Rooter.root_dir then
-		change_root(Rooter.root_dir)
-		Util.info(Rooter.root_dir, { title = "rooter" })
+	local project_dir = M.get_project_dir()
+	if project_dir then
+		Rooter.root_dir = project_dir.path
+		if Rooter.root_dir then
+			change_root(Rooter.root_dir)
+			Util.info(Rooter.root_dir, { title = "rooter" })
+		end
 	end
 end
 
