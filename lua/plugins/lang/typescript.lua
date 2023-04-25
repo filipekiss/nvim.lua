@@ -29,8 +29,14 @@ return {
 					Idle.load("functions.lsp").attach_autocmd(
 						function(client, buffer)
 							if client.name == "tsserver" then
-              -- stylua: ignore
-              vim.keymap.set("n", "<leader>co", "<cmd>TypescriptOrganizeImports<CR>", { buffer = buffer, desc = "Organize Imports" })
+								vim.keymap.set("n", "<leader>co", function()
+									local ts = require("typescript")
+									ts.actions.removeUnused({ sync = true })
+									ts.actions.organizeImports({ sync = true })
+								end, {
+									buffer = buffer,
+									desc = "Organize Imports",
+								})
               -- stylua: ignore
               vim.keymap.set("n", "<leader>cR", "<cmd>TypescriptRenameFile<CR>", { desc = "Rename File", buffer = buffer })
 							end
