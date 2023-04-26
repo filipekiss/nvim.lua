@@ -4,9 +4,13 @@ return function(builtin, opts)
 	local params = { builtin = builtin, opts = opts }
 	return function()
 		builtin = params.builtin
-		opts = params.opts
-		local cwd = rooter.get_project_dir()
-		opts = vim.tbl_deep_extend("force", { cwd = cwd.path }, opts or {})
+		opts = params.opts or {}
+		local cwd = opts.cwd or rooter.get_project_dir()
+		opts = vim.tbl_deep_extend(
+			"force",
+			{ cwd = cwd and cwd.path },
+			opts or {}
+		)
 		if builtin == "files" then
 			if cwd and cwd.is_git then
 				opts.show_untracked = true
