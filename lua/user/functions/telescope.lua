@@ -8,7 +8,7 @@ return function(builtin, opts)
 		local cwd = rooter.get_project_dir()
 		opts = vim.tbl_deep_extend("force", { cwd = cwd.path }, opts or {})
 		if builtin == "files" then
-			if cwd.is_git then
+			if cwd and cwd.is_git then
 				opts.show_untracked = true
 				builtin = "git_files"
 			else

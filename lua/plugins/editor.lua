@@ -1,18 +1,5 @@
 local telescope = require("user.functions.telescope")
 return {
-	-- fuzzy finder
-	{
-		"nvim-telescope/telescope.nvim",
-		cmd = "Telescope",
-		version = false, -- telescope did only one release, so use HEAD for now
-		keys = {},
-		opts = {
-			defaults = {
-				prompt_prefix = " ",
-				selection_caret = " ",
-			},
-		},
-	},
 	-- git signs
 	{
 		"lewis6991/gitsigns.nvim",
