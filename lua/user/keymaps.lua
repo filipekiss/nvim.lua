@@ -170,32 +170,5 @@ map(
 	'&diff ? ":windo bd<CR>" : ":quit<CR>"',
 	{ expr = true, silent = true }
 )
---[[
 
--- when selecting an item in quickfix, close it
-local augroup = require("nebula.helpers.autocmd").augroup
-augroup("NebulaQfCloseOnSelect", {
-	{
-		events = { "FileType" },
-		targets = { "qf" },
-		command = nnoremap(
-			"<CR>",
-			"<CR>:cclose<CR>",
-			opts.get_string(opts.buffer(opts.silent()))
-		),
-	},
-})
--- press q to close que quickfix list
-augroup("NebulaQfCloseOnQ", {
-	{
-		events = { "FileType" },
-		targets = { "qf", "help" },
-		command = nnoremap(
-			"q",
-			":q<CR>",
-			opts.get_string(opts.buffer(opts.silent()))
-		),
-	},
-})
-]]
---
+map("n", "<leader>ec", "<cmd>Config<CR>")
