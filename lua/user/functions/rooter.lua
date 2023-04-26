@@ -44,16 +44,8 @@ local function is_valid_path(path)
 end
 
 function M.get_project_dir()
-	local default_project_root_files = {
-		"package.json",
-		".git",
-	}
-	local project_root_files = _.TableConcat(
-		vim.g.project_root_files or {},
-		default_project_root_files
-	)
-	for _, file in pairs(project_root_files) do
-		local result = find_root_folder(file)
+	for _, pattern in pairs(Idle.options.rooter.root_pattern) do
+		local result = find_root_folder(pattern)
 		if result and result.path and is_valid_path(result.path) then
 			return result
 		end
@@ -61,51 +53,71 @@ function M.get_project_dir()
 	return nil
 end
 
-local function table_has(haystack, needle)
-	for _, value in ipairs(haystack) do
-		if value == needle then
-			return true
-		end
-	end
-	return false
-end
+local table_has = require("idle.helpers.table").table_has
 
 local buffer_table = require("idle.helpers.table").buffer_table
+local window_table = require("idle.helpers.table").window_table
 
-local Rooter = buffer_table({
-	root_dir = "rooter_dir",
-	excluded = "rooter_excluded",
+local RooterBuffer = buffer_table({
+	current_root = "rooter_current_root",
+	excluded = "rooter_buffer_excluded",
+	notify_once = "rooter_notify_once",
 })
+
+local RooterWindow = window_table({
+	previous_root = "rooter_previous_root",
+})
+
+local function notify_if_changed(previous, current)
+	if
+		previous ~= current
+		and Idle.options.rooter.silent ~= true
+		and RooterBuffer.notify_once ~= true
+	then
+		Util.info(current, { title = "rooter" })
+		if Idle.options.rooter.notify_once then
+			RooterBuffer.notify_once = true
+		end
+	end
+end
 
 function M.set_project_dir()
 	local change_root = vim.api.nvim_set_current_dir
-	local excluded_filetypes = Idle.options.rooter
-			and Idle.options.rooter.exclude
-		or { "" }
+	local excluded_filetypes = Idle.options.rooter.exclude or { "" }
 	local is_excluded_filetype = table_has(excluded_filetypes, vim.bo.filetype)
 	-- if we already excluded this buffer, just skip
-	if Rooter.excluded then
+	if RooterBuffer.excluded then
 		return
 	end
 	-- if we are excluding the buffer for the first time, add the variable and
 	-- then skip
 	if is_excluded_filetype then
-		Rooter.excluded = true
+		RooterBuffer.excluded = true
 		return
 	end
 	-- if we already set it for this buffer, use the set value
-	if Rooter.root_dir then
-		change_root(Rooter.root_dir)
+	if RooterBuffer.current_root then
+		change_root(RooterBuffer.current_root)
+		notify_if_changed(RooterWindow.previous_root, RooterBuffer.current_root)
+		if RooterWindow.previous_root ~= RooterBuffer.current_root then
+			RooterWindow.previous_root = RooterBuffer.current_root
+		end
 		return
 	end
 
 	-- this is the first time we are here, let's update the root dir
 	local project_dir = M.get_project_dir()
 	if project_dir then
-		Rooter.root_dir = project_dir.path
-		if Rooter.root_dir then
-			change_root(Rooter.root_dir)
-			Util.info(Rooter.root_dir, { title = "rooter" })
+		RooterBuffer.current_root = project_dir.path
+		if RooterBuffer.current_root then
+			change_root(RooterBuffer.current_root)
+			notify_if_changed(
+				RooterWindow.previous_root,
+				RooterBuffer.current_root
+			)
+			if RooterWindow.previous_root ~= RooterBuffer.current_root then
+				RooterWindow.previous_root = RooterBuffer.current_root
+			end
 		end
 	end
 end

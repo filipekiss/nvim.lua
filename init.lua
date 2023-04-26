@@ -36,7 +36,12 @@ local lazyOptions = {
 				-- having them here makes it easier to change settings without needing
 				-- to remember where I need to update them
 				rooter = {
+					root_pattern = {
+						".git",
+						"package.json",
+					}, -- if this files/folders are found, set as the current root. priority is top to bottom
 					exclude = { "", "help", "man", "gitcommit" }, -- don't run rooter on these filetypes
+					notify_once = true, -- only notify the first time the root is changed for a buffer in any given window
 				},
 				-- disable smart numbering for the following filetypes and use…
 				nonumber = { "gitcommit" }, -- …nonumber norelativenumber (never show numbers)
