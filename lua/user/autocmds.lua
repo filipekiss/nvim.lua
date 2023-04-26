@@ -2,12 +2,9 @@ local functions = Idle.load("functions")
 local rooter = Idle.load("functions.rooter")
 local augroup = require("idle.helpers.autocmd").augroup
 local autocmd = vim.api.nvim_create_autocmd
+local check_file_changed = require("user.functions.checktime")
 
-autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-	desc = "Check if we need to reload the file when it changed",
-	group = augroup("checktime"),
-	command = "checktime",
-})
+check_file_changed()
 
 autocmd("TextYankPost", {
 	desc = "Highlight on yank",
