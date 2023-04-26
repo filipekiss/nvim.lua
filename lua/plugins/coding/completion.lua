@@ -14,7 +14,9 @@ local has_words_before = function()
 			== nil
 end
 
-local smart_completion = function(cmp, luasnip, direction)
+local smart_completion = function(direction)
+	local cmp = require("cmp")
+	local luasnip = require("luasnip")
 	if direction == "previous" then
 		return function(fallback)
 			if cmp.visible() then

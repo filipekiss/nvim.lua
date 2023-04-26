@@ -93,18 +93,19 @@ return {
 					["<C-d>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-n>"] = cmp.mapping(
-						smart_completion(cmp, luasnip, "next"),
+						smart_completion("next"),
 						{ "i", "s" }
 					),
 					["<C-p>"] = cmp.mapping(
-						smart_completion(cmp, luasnip, "previous"),
+						smart_completion("previous"),
 						{ "i", "s" }
 					),
 					-- for colemak reasons, maybe I can find a better way to map this
 					["<C-e>"] = cmp.mapping(
-						smart_completion(cmp, luasnip, "previous"),
+						smart_completion("previous"),
 						{ "i", "s" }
 					),
+					["<C-x>"] = cmp.mapping.complete(),
 					["<C-u>"] = cmp.mapping({
 						i = cmp.mapping.abort(),
 						c = cmp.mapping.close(),
@@ -118,11 +119,11 @@ return {
 						select = false,
 					}),
 					["<Tab>"] = cmp.mapping(
-						smart_completion(cmp, luasnip, "next"),
+						smart_completion("next"),
 						{ "i", "s" }
 					),
 					["<S-Tab>"] = cmp.mapping(
-						smart_completion(cmp, luasnip, "previous"),
+						smart_completion("previous"),
 						{ "i", "s" }
 					),
 				}),
