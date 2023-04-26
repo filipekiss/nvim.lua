@@ -58,9 +58,13 @@ return {
 			"hrsh7th/cmp-path",
 			"saadparwaiz1/cmp_luasnip",
 			"L3MON4D3/LuaSnip",
+			"hrsh7th/cmp-omni",
 		},
 		init = function()
 			require("plugins.coding.ui")
+			require("cmp").setup.filetype("DressingInput", {
+				sources = require("cmp").config.sources({ { name = "omni" } }),
+			})
 		end,
 		opts = function()
 			local cmp = require("cmp")
