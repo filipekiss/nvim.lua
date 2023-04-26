@@ -105,6 +105,7 @@ return {
 				),
 				sources = {
 					nls.builtins.formatting.stylua,
+					nls.builtins.diagnostics.eslint_d,
 				},
 			}
 		end,
