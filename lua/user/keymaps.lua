@@ -172,3 +172,6 @@ map(
 )
 
 map("n", "<leader>ec", "<cmd>Config<CR>")
+
+map("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
