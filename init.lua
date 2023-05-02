@@ -35,8 +35,17 @@ local lazyOptions = {
 				-- extra options I use throughout my configuration
 				-- having them here makes it easier to change settings without needing
 				-- to remember where I need to update them
+				quit_on_q = { -- which filetypes to quit on <q>
+					"help",
+					"lspinfo",
+					"man",
+					"notify",
+					"qf",
+					"startuptime",
+				},
 				rooter = {
 					root_pattern = {
+						".rooter",
 						".git",
 						"package.json",
 					}, -- if this files/folders are found, set as the current root. priority is top to bottom
