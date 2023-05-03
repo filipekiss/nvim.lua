@@ -41,6 +41,7 @@ local lazyOptions = {
 					"man",
 					"notify",
 					"qf",
+					"checkhealth",
 					"startuptime",
 				},
 				rooter = {
