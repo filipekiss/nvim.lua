@@ -34,6 +34,7 @@ opt.splitright = true -- new vertical splits on the right
 opt.tabstop = 2 -- use 2 spaces for a tab
 opt.termguicolors = true -- use true colors
 opt.textwidth = 80 -- wrap text at 80 chars
+opt.timeoutlen = 500 -- mapping timeout
 opt.undofile = true -- undo persist even if you close the file
 opt.wrap = false -- don't wrap text, make it a long line
 opt.wildmenu = true -- enhanced tab completion for the ex command line

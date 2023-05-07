@@ -13,12 +13,35 @@ return {
 					vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
 				end
 
-        -- stylua: ignore start
-        map("n", "]h", gs.next_hunk, "Next Hunk")
-        map("n", "[h", gs.prev_hunk, "Prev Hunk")
-        map("n", "<leader>gb", function() gs.blame_line({ full = true }) end, "Blame Line")
-        map("n", "<leader>gd", gs.diffthis, "Diff This")
-        map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
+				map("n", "]h", gs.next_hunk, "Next Hunk")
+				map("n", "[h", gs.prev_hunk, "Prev Hunk")
+
+				map("n", "<leader>ghs", gs.stage_hunk, "Stage hunk")
+				map("n", "<leader>ghr", gs.reset_hunk, "Reset hunk")
+				map("v", "<leader>ghs", function()
+					gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+				end, "Stage hunk")
+				map("v", "<leader>ghr", function()
+					gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+				end, "Reset hunk")
+				map("n", "<leader>ghS", gs.stage_buffer, "Stage buffer")
+				map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo stage hunk")
+				map("n", "<leader>ghR", gs.reset_buffer, "Reset buffer")
+				map("n", "<leader>ghp", gs.preview_hunk, "Preview hunk")
+				map("n", "<leader>ghb", function()
+					gs.blame_line({ full = true })
+				end, "Blame line")
+				map(
+					"n",
+					"<leader>gtb",
+					gs.toggle_current_line_blame,
+					"Toggle blame line"
+				)
+				map("n", "<leader>ghd", gs.diffthis, "Diff this")
+				map("n", "<leader>ghD", function()
+					gs.diffthis("~")
+				end, "Diff this ~")
+				map("n", "<leader>gtd", gs.toggle_deleted, "Toggle deleted")
 			end,
 		},
 	},
@@ -270,27 +293,34 @@ return {
 	{
 		"https://github.com/folke/trouble.nvim",
 		cmd = { "TroubleToggle", "Trouble" },
-		opts = { use_diagnostic_signs = true, icons = false },
+		opts = {
+			use_diagnostic_signs = true,
+			icons = false,
+			action_keys = {
+				jump = {},
+				jump_close = { "<cr>" },
+			},
+		},
 		keys = {
 			{
 				"<leader>xx",
 				"<cmd>TroubleToggle document_diagnostics<cr>",
-				desc = "Document Diagnostics (Trouble)",
+				desc = "[Trouble] Document Diagnostics",
 			},
 			{
 				"<leader>xX",
 				"<cmd>TroubleToggle workspace_diagnostics<cr>",
-				desc = "Workspace Diagnostics (Trouble)",
+				desc = "[Trouble] Workspace Diagnostics",
 			},
 			{
 				"<leader>xL",
 				"<cmd>TroubleToggle loclist<cr>",
-				desc = "Location List (Trouble)",
+				desc = "[Trouble] Location List",
 			},
 			{
 				"<leader>xQ",
 				"<cmd>TroubleToggle quickfix<cr>",
-				desc = "Quickfix List (Trouble)",
+				desc = "[Trouble] Quickfix List",
 			},
 			{
 				"[q",
@@ -345,11 +375,15 @@ return {
 				end,
 				desc = "Previous todo comment",
 			},
-			{ "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+			{
+				"<leader>xt",
+				"<cmd>TodoTrouble<cr>",
+				desc = "[Trouble] Todo",
+			},
 			{
 				"<leader>xT",
 				"<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",
-				desc = "Todo/Fix/Fixme (Trouble)",
+				desc = "[Trouble] Todo/Fix/Fixme",
 			},
 			{ "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
 			{
@@ -383,5 +417,34 @@ return {
 				desc = "Delete Buffer (Force)",
 			},
 		},
+	},
+	-- which key
+	{
+		"https://github.com/folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			plugins = { spelling = true },
+			operators = { gc = "Comments" },
+			defaults = {
+				mode = { "n", "v" },
+				["g"] = { name = "+goto" },
+				["s"] = { name = "+surround" },
+				["]"] = { name = "+next" },
+				["["] = { name = "+prev" },
+				["<leader>b"] = { name = "+buffer" },
+				["<leader>c"] = { name = "+code" },
+				["<leader>f"] = { name = "+file/find" },
+				["<leader>g"] = { name = "+git" },
+				["<leader>gh"] = { name = "+hunks" },
+				["<leader>gt"] = { name = "+toggle" },
+				["<leader>s"] = { name = "+search" },
+				["<leader>x"] = { name = "+diagnostics" },
+			},
+		},
+		config = function(_, opts)
+			local wk = require("which-key")
+			wk.setup(opts)
+			wk.register(opts.defaults)
+		end,
 	},
 }

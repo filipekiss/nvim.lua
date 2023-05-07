@@ -108,12 +108,12 @@ map("v", "y", '"' .. 'my\\"" . v:register . "y`y' .. '"', { expr = true })
 --
 
 -- mark the current line and add a line at the beggining and end of the file
-map("n", "<leader>o", "moGGo")
-map("n", "<leader>O", "mOggO")
+map("n", "<leader>o", "moGGo", "Add line at beginning of buffer")
+map("n", "<leader>O", "mOggO", "Add line at the end of buffer")
 
 -- easier navigation in line - H goes to the start, L goes to the end
-map("n", "H", "^")
-map("n", "L", "$")
+map("n", "H", "^", "Move cursor to start of the line")
+map("n", "L", "$", "Move cursor to end of the line")
 
 -- Make better undo chunks when writing long texts (prose) without exiting insert mode.
 -- :h i_CTRL-G_u
@@ -124,10 +124,10 @@ map("i", "!", "!<c-g>u")
 map("i", ",", ",<c-g>u")
 
 -- Use CTRL+[MNEI] to navigate between panes, instead of CTRL+W CTRL+[HJKL]
-map("n", "<leader>m", "<C-w><C-h>", { desc = "Go to left pane" })
-map("n", "<leader>n", "<C-w><C-j>", { desc = "Go to bottom pane" })
-map("n", "<leader>e", "<C-w><C-k>", { desc = "Go to top pane" })
-map("n", "<leader>i", "<C-w><C-l>", { desc = "Go to right pane" })
+map("n", "<leader>m", "<C-w><C-h>", "Go to left pane")
+map("n", "<leader>n", "<C-w><C-j>", "Go to bottom pane")
+map("n", "<leader>e", "<C-w><C-k>", "Go to top pane")
+map("n", "<leader>i", "<C-w><C-l>", "Go to right pane")
 
 -- Use | to split window vertically and _ to split it horizontally
 map(
@@ -145,20 +145,20 @@ map(
 
 -- List current buffers to cycle, but only if telescope is not installed
 if not Idle.has_plugin("telescope.nvim") then
-	map("n", "<tab>", ":silent ls<CR>:b<space>")
+	map("n", "<tab>", ":silent ls<CR>:b<space>", "Show buffer switcher")
 end
 
 -- repeat last macro (use qq to record, @q to run the first time and Q to run it
-map("n", "Q", "@@")
+map("n", "Q", "@@", "Repeat last macro")
 
 -- avoid overwriting the register when pasting (allow to past multiple times)
 map("x", "p", '"_dP')
 
 -- Insert before current word under the cursor
-map("n", "<leader>I", "bi")
+map("n", "<leader>I", "bi", "Insert before current word")
 
 -- Insert after current word under the cursor
-map("n", "<leader>A", "ea")
+map("n", "<leader>A", "ea", "Insert after current word")
 
 -- make <leader>q exit terminal mode when in terminal, of course
 map("t", "<Leader>q", "<C-\\><C-n>")
@@ -168,10 +168,8 @@ map(
 	"n",
 	"<leader>Q",
 	'&diff ? ":windo bd<CR>" : ":quit<CR>"',
-	{ expr = true, silent = true }
+	{ expr = true, silent = true, desc = "Quit" }
 )
 
-map("n", "<leader>ec", "<cmd>Config<CR>")
-
-map("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next buffer" })
-map("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
+map("n", "<leader>bn", "<cmd>bnext<CR>", "Next buffer")
+map("n", "<leader>bp", "<cmd>bprevious<CR>", "Previous buffer")
