@@ -44,9 +44,31 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 			local function setup(server)
-				local server_opts = vim.tbl_deep_extend("force", {
+				local server_opts = {
 					capabilities = vim.deepcopy(capabilities),
-				}, servers[server] or {})
+				}
+				-- check if a file exists in
+				-- lua/<namespace>/lsp/server/<server-name>.lua
+				local settings_file = "lsp.server." .. server
+				if
+					Idle.load(
+						settings_file,
+						{ silent = not Idle.options.debug }
+					)
+				then
+					local server_opts_from_file = Idle.load(settings_file)
+					server_opts = vim.tbl_deep_extend(
+						"force",
+						server_opts,
+						server_opts_from_file
+					)
+				else
+					server_opts = vim.tbl_deep_extend(
+						"force",
+						server_opts,
+						servers[server] or {}
+					)
+				end
 
 				if opts.setup[server] then
 					if opts.setup[server](server, server_opts) then
