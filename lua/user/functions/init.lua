@@ -122,4 +122,13 @@ function M.get_hlgroup(name, fallback)
 	return fallback or {}
 end
 
+function M.open_vscode(params)
+	local args = params.fargs
+	local file_or_project = args[1] == "file" and "file" or "project"
+	local open_this = vim.fn.expand(
+		file_or_project == "file" and "%:p" or "%:p:h"
+	)
+	vim.fn.system("code " .. open_this)
+end
+
 return M

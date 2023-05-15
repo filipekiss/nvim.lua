@@ -67,3 +67,11 @@ add_command(
 		}),
 	}
 )
+
+add_command("VSCode", require("user.functions").open_vscode, {
+	desc = "Open current file in VSCode",
+	nargs = "?",
+	complete = function()
+		return { "file", "project" }
+	end,
+})
