@@ -29,44 +29,19 @@ add_command("Config", require("user.functions.config").open_or_find, {
 	}),
 })
 
-add_command(
-	"Config",
-	require("user.functions.config").open_or_find(vim.fn.stdpath("config")),
-	{
-		desc = "Browse config files",
-		nargs = "?",
-		complete = require("user.functions.config").complete_files({
-			path = vim.fn.stdpath("config"),
-			ignore = {
-				".DS_Store",
-				".git",
-				"node_modules",
-				"lazy-lock.json",
-				"lua/plugins/",
-			},
-		}),
-	}
-)
+local add_config_command =
+	require("user.functions.config").register_config_command
 
-add_command(
-	"Plugin",
-	require("user.functions.config").open_or_find(
-		vim.fn.stdpath("config") .. "/lua/plugins"
-	),
-	{
-		desc = "Browse plugin files",
-		nargs = "?",
-		complete = require("user.functions.config").complete_files({
-			path = vim.fn.stdpath("config") .. "/lua/plugins",
-			ignore = {
-				".DS_Store",
-				".git",
-				"node_modules",
-				"lazy-lock.json",
-			},
-		}),
-	}
-)
+add_config_command("Config", {
+	path = vim.fn.stdpath("config") .. "/lua/" .. Idle.options.namespace,
+	desc = "Browse files in lua/" .. Idle.options.namespace,
+	open_vimrc = true,
+})
+
+add_config_command("Plugin", {
+	path = vim.fn.stdpath("config") .. "/lua/plugins",
+	desc = "Browse plugin files",
+})
 
 add_command("VSCode", require("user.functions").open_vscode, {
 	desc = "Open current file in VSCode",
