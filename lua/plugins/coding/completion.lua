@@ -1,9 +1,3 @@
--- bring back supertab from Nebula
-local check_backspace = function()
-	local col = vim.fn.col(".") - 1
-	return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-end
-
 local has_words_before = function()
 	unpack = unpack or table.unpack
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -17,6 +11,9 @@ end
 local smart_completion = function(direction)
 	local cmp = require("cmp")
 	local luasnip = require("luasnip")
+	local copilot_suggestion = require("idle.util").safe_require(
+		"copilot.suggestion"
+	)
 	if direction == "previous" then
 		return function(fallback)
 			if cmp.visible() then
@@ -39,7 +36,9 @@ local smart_completion = function(direction)
 		end
 	else
 		return function(fallback)
-			if cmp.visible() then
+			if copilot_suggestion and copilot_suggestion.is_visible() then
+				copilot_suggestion.accept()
+			elseif cmp.visible() then
 				cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 			elseif luasnip.expandable() then
 				luasnip.expand()

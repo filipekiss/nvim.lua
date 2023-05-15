@@ -114,6 +114,9 @@ local lazyOptions = {
 		{
 			import = "plugins.lang",
 		},
+		{
+			import = "plugins.coding.copilot",
+		},
 	},
 	dev = {
 		path = "~/code/filipekiss",
