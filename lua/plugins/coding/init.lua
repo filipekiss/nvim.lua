@@ -165,17 +165,13 @@ return {
 	{
 		"echasnovski/mini.pairs",
 		event = "VeryLazy",
-		config = function(_, opts)
-			require("mini.pairs").setup(opts)
-		end,
+		config = true,
 	},
 
 	-- surround
 	{
 		"echasnovski/mini.surround",
-		config = function(_, opts)
-			require("mini.surround").setup(opts)
-		end,
+		config = true,
 	},
 
 	-- comments
@@ -190,9 +186,6 @@ return {
 				end,
 			},
 		},
-		config = function(_, opts)
-			require("mini.comment").setup(opts)
-		end,
 	},
 
 	-- better text-objects
