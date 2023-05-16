@@ -44,6 +44,9 @@ local lazyOptions = {
 					"checkhealth",
 					"startuptime",
 				},
+				auto_loc_ignore = {
+					"gitcommit",
+				},
 				rooter = {
 					root_pattern = {
 						".rooter",

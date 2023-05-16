@@ -25,6 +25,10 @@ autocmd("BufReadPost", {
 	desc = "go to last loc when opening a buffer",
 	group = augroup("last_loc"),
 	callback = function()
+		local table_has = require("idle.helpers.table").table_has
+		if table_has(Idle.options.auto_loc_ignore or {}, vim.bo.filetype) then
+			return
+		end
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
 		local lcount = vim.api.nvim_buf_line_count(0)
 		if mark[1] > 0 and mark[1] <= lcount then
