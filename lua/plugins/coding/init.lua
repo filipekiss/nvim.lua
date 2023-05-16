@@ -116,7 +116,22 @@ return {
 					}),
 					["<Esc>"] = cmp.mapping({
 						i = cmp.mapping.abort(),
-						c = cmp.mapping.close(),
+						c = function()
+							if cmp.visible() then
+								cmp.close()
+							else
+								vim.api.nvim_feedkeys(
+									vim.api.nvim_replace_termcodes(
+										"<C-c>",
+										true,
+										true,
+										true
+									),
+									"n",
+									true
+								)
+							end
+						end,
 					}),
 					["<CR>"] = cmp.mapping.confirm({
 						behavior = cmp.ConfirmBehavior.Replace,
