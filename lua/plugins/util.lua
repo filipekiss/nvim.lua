@@ -1,5 +1,5 @@
 return {
-	-- plenary.nvim
+	-- utility functions used by other plugins
 	{ "https://github.com/nvim-lua/plenary.nvim", lazy = true },
 	-- better vim-notify
 	{
@@ -67,5 +67,10 @@ return {
 			end
 			require("notify").setup(options)
 		end,
+	},
+	-- ui library, used by other plugins
+	{
+		"http://github.com/MunifTanjim/nui.nvim",
+		lazy = true,
 	},
 }
