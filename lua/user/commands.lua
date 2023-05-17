@@ -50,3 +50,12 @@ add_command("VSCode", require("user.functions").open_vscode, {
 		return { "file", "project" }
 	end,
 })
+
+add_command("Git", function(params)
+	local cwd = params.bang and vim.loop.cwd()
+		or require("user.functions.rooter").get_project_dir().path
+	require("user.functions").float_term({ "lazygit" }, {
+		cwd = cwd,
+		esc_esc = false,
+	})
+end, { desc = "Open Lazygit", bang = true })

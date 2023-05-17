@@ -173,3 +173,5 @@ map(
 
 map("n", "<leader>bn", "<cmd>bnext<CR>", "Next buffer")
 map("n", "<leader>bp", "<cmd>bprevious<CR>", "Previous buffer")
+map("n", "<leader>gg", "<cmd>Git<CR>", "Lazygit (root)")
+map("n", "<leader>gG", "<cmd>Git!<CR>", "Lazygit (cwd)")
