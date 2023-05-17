@@ -43,6 +43,9 @@ local lazyOptions = {
 					"qf",
 					"checkhealth",
 					"startuptime",
+					-- treesitter panes
+					"tsplayground",
+					"query",
 				},
 				auto_loc_ignore = {
 					"gitcommit",
