@@ -2,7 +2,7 @@ return {
 
 	-- add json to treesitter
 	{
-		"nvim-treesitter/nvim-treesitter",
+		"nvim-treesitter",
 		opts = function(_, opts)
 			opts.ensure_installed = vim.list_extend(
 				opts.ensure_installed or {},
@@ -13,9 +13,9 @@ return {
 
 	-- correctly setup lspconfig
 	{
-		"neovim/nvim-lspconfig",
+		"nvim-lspconfig",
 		dependencies = {
-			"b0o/SchemaStore.nvim",
+			"https://github.com/b0o/SchemaStore.nvim",
 			version = false, -- last release is way too old
 		},
 		opts = {

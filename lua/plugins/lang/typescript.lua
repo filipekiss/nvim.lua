@@ -2,7 +2,7 @@ return {
 
 	-- add typescript to treesitter
 	{
-		"nvim-treesitter/nvim-treesitter",
+		"nvim-treesitter",
 		opts = function(_, opts)
 			if type(opts.ensure_installed) == "table" then
 				vim.list_extend(opts.ensure_installed, { "typescript", "tsx" })
@@ -12,8 +12,10 @@ return {
 
 	-- correctly setup lspconfig
 	{
-		"neovim/nvim-lspconfig",
-		dependencies = { "jose-elias-alvarez/typescript.nvim" },
+		"nvim-lspconfig",
+		dependencies = {
+			"https://github.com/jose-elias-alvarez/typescript.nvim",
+		},
 		opts = {
 			servers = {
 				tsserver = {
@@ -49,7 +51,7 @@ return {
 		},
 	},
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"null-ls.nvim",
 		opts = function(_, opts)
 			table.insert(
 				opts.sources or {},

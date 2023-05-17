@@ -1,11 +1,11 @@
 return {
 	{
-		"nvim-treesitter/nvim-treesitter",
+		"https://github.com/nvim-treesitter/nvim-treesitter",
 		version = false, -- last release is way too old and doesn't work on Windows
 		build = ":TSUpdate",
 		dependencies = {
 			{
-				"nvim-treesitter/nvim-treesitter-textobjects",
+				"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 				init = function()
 					-- PERF: no need to load the plugin, if we only need its queries for mini.ai
 					local plugin =
@@ -46,7 +46,9 @@ return {
 			{ "<S-Tab>", desc = "Decrement selection", mode = "x" },
 		},
 		opts = {
-			highlight = { enable = true },
+			highlight = {
+				enable = true,
+			},
 			indent = { enable = true },
 			context_commentstring = {
 				enable = true,

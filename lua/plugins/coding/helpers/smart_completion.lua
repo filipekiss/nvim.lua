@@ -8,7 +8,7 @@ local has_words_before = function()
 			== nil
 end
 
-local smart_completion = function(direction)
+return function(direction)
 	local cmp = require("cmp")
 	local luasnip = require("luasnip")
 	local copilot_suggestion = require("idle.util").safe_require(
@@ -60,7 +60,3 @@ local smart_completion = function(direction)
 		end
 	end
 end
-
-return {
-	smart_completion = smart_completion,
-}

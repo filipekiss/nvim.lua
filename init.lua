@@ -20,7 +20,7 @@ require("user.functions").lazy_notify()
 local lazyOptions = {
 	spec = {
 		{
-			"filipekiss/idle.nvim",
+			"https://github.com/filipekiss/idle.nvim",
 			dev = true,
 			lazy = false,
 			priority = 10000,
@@ -28,7 +28,7 @@ local lazyOptions = {
 			cond = true,
 			version = "*",
 			dependencies = {
-				{ "folke/lazy.nvim" },
+				{ "lazy.nvim" },
 			},
 			opts = {
 				colorscheme = "duskfox",
@@ -118,7 +118,7 @@ local lazyOptions = {
 			import = "plugins.lang",
 		},
 		{
-			import = "plugins.coding.copilot",
+			import = "plugins.coding",
 		},
 	},
 	dev = {
