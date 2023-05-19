@@ -59,3 +59,13 @@ add_command("Git", function(params)
 		esc_esc = false,
 	})
 end, { desc = "Open Lazygit", bang = true })
+
+add_command("Term", function(params)
+	local cwd = params.bang and vim.loop.cwd()
+		or require("user.functions.rooter").get_project_dir().path
+	require("user.functions.terminal").float(nil, {
+		cwd = cwd,
+		esc_esc = false,
+		border = "single",
+	})
+end, { desc = "Open Terminal", bang = true })
