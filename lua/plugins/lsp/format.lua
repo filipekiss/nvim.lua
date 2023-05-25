@@ -1,33 +1,61 @@
 local Util = require("idle.util")
+local yesno = require("user.functions.yesno")
 local buffer_table = require("idle.helpers.table").buffer_table
+local global_table = require("idle.helpers.table").global_table
 local M = {}
 
 local LspBuffer = buffer_table({
 	autoformat = "autoformat",
 })
 
+local LspGlobal = global_table({
+	autoformat = "autoformat",
+})
+
 ---Toggle autoformat on or off
 ---@param next_autoformat? boolean If true, enable autoformat. If false, disable it. If nil, toggle
-function M.set_autoformat(next_autoformat)
-	local current_autoformat = LspBuffer.autoformat
+---@param global? boolean If true, toggle the option globally instead of locally
+function M.set_autoformat(next_autoformat, global)
+	global = global ~= false and global ~= nil
+	local current_autoformat = global and LspGlobal.autoformat
+		or LspBuffer.autoformat
 	if next_autoformat == true then
 		current_autoformat = false
 	elseif next_autoformat == false then
 		current_autoformat = true
 	end
 	if current_autoformat == nil or current_autoformat == true then
-		LspBuffer.autoformat = false
-		Util.warn("Disabled format on save", { title = "Format" })
+		if global then
+			LspGlobal.autoformat = false
+		else
+			LspBuffer.autoformat = false
+		end
+		Util.warn(
+			"Disabled format on save "
+				.. yesno("globally", "for the current buffer", global),
+			{ title = "Format" }
+		)
 	else
-		LspBuffer.autoformat = true
-		Util.info("Enabled format on save", { title = "Format" })
+		if global then
+			LspGlobal.autoformat = true
+		else
+			LspBuffer.autoformat = true
+		end
+		Util.info(
+			"Enabled format on save "
+				.. yesno("globally", "for the current buffer", global),
+			{ title = "Format" }
+		)
 	end
 end
 
 ---Format the current file using LSP
 ---@param force boolean If true, will run format even if autoformat is disabled
 function M.format(force)
-	if LspBuffer.autoformat == false and force ~= true then
+	if
+		(LspBuffer.autoformat == false or LspGlobal.autoformat == false)
+		and force ~= true
+	then
 		return
 	end
 	local buf = vim.api.nvim_get_current_buf()
@@ -85,9 +113,54 @@ function M.on_attach(client, buf)
 		},
 		FormatToggle = {
 			command = function()
+				M.set_autoformat(nil, true)
+			end,
+			desc = "[LSP] Toggle autoformat globally",
+		},
+		FormatToggleBuffer = {
+			command = function()
 				M.set_autoformat()
 			end,
 			desc = "[LSP] Toggle autoformat for current buffer",
+		},
+		FormatStatus = {
+			command = function()
+				local project_autoformat_status = nil
+				pcall(function()
+					project_autoformat_status = require("neoconf").get(
+						"user.lsp.autoformat"
+					)
+					if project_autoformat_status ~= nil then
+						Util.info({
+							string.format(
+								"Auto format is **%s** for the project. Other settings ignored.",
+								yesno(
+									"enabled",
+									"disabled",
+									project_autoformat_status
+								)
+							),
+						}, { title = "LSP Autoformat" })
+						return
+					end
+				end)
+				if project_autoformat_status == nil then
+					Util.info({
+						"",
+						"**Global Format:** `" .. yesno(
+							"enabled",
+							"disabled",
+							LspGlobal.autoformat ~= false
+						) .. "`",
+						"**Buffer Format:** `" .. yesno(
+							"enabled",
+							"disabled",
+							LspBuffer.autoformat ~= false
+						) .. "`",
+					}, { title = "LSP Autoformat" })
+				end
+			end,
+			desc = "[LSP] Show current autoformat status",
 		},
 	}
 	local format_commands_state = {
@@ -97,9 +170,19 @@ function M.on_attach(client, buf)
 	for state, value in pairs(format_commands_state) do
 		commands["Format" .. state] = {
 			command = function()
+				M.set_autoformat(value, true)
+			end,
+			desc = "[LSP] Turn autoformat "
+				.. string.lower(state)
+				.. " globally",
+		}
+		commands["FormatBuffer" .. state] = {
+			command = function()
 				M.set_autoformat(value)
 			end,
-			desc = "[LSP] Turn autoformat " .. string.lower(state),
+			desc = "[LSP] Turn autoformat "
+				.. string.lower(state)
+				.. "for current buffer",
 		}
 	end
 	create_commands(commands)
