@@ -148,7 +148,19 @@ return {
 				),
 				sources = {
 					nls.builtins.formatting.stylua,
-					nls.builtins.diagnostics.eslint_d,
+					nls.builtins.diagnostics.eslint_d.with({
+						prefer_local = "node_modules/.bin",
+						condition = function(utils)
+							return utils.root_has_file({
+								".eslintrc",
+								".eslintrc.js",
+								".eslintrc.cjs",
+								".eslintrc.yaml",
+								".eslintrc.yml",
+								".eslintrc.json",
+							})
+						end,
+					}),
 				},
 			}
 		end,
