@@ -73,4 +73,9 @@ return {
 		"http://github.com/MunifTanjim/nui.nvim",
 		lazy = true,
 	},
+	-- icons
+	{
+		"https://github.com/nvim-tree/nvim-web-devicons",
+		lazy = true,
+	},
 }

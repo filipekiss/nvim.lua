@@ -58,6 +58,7 @@ return {
 				expander_highlight = "NeoTreeExpander",
 			},
 		},
+		hijack_netrw_behavior = "open_default",
 		event_handlers = {
 			{
 				event = "file_opened",
@@ -67,6 +68,7 @@ return {
 			},
 		},
 	},
+	lazy = false,
 	config = function(_, opts)
 		require("neo-tree").setup(opts)
 		vim.api.nvim_create_autocmd("TermClose", {
