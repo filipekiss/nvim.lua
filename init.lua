@@ -65,6 +65,7 @@ local lazyOptions = {
 				relativenumber = { "man", "help" }, -- …number relativenumber (always show relative numbers)
 				-- icons used by LSP, Completion, etc
 				icons = {
+					mode = "⚡",
 					diagnostics = {
 						Error = " ",
 						Warn = " ",

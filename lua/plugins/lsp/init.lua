@@ -11,6 +11,7 @@ return {
 				"https://github.com/folke/neodev.nvim",
 				opts = { experimental = { pathStrict = true } },
 			}, -- used to develop plugins and give context awareness to vim config globals
+			"nvim-navbuddy",
 		},
 		opts = {
 			servers = {

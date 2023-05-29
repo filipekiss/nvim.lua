@@ -18,6 +18,8 @@ return {
 			["<leader>gt"] = { name = "+toggle" },
 			["<leader>s"] = { name = "+search" },
 			["<leader>x"] = { name = "+diagnostics" },
+			["<leader>t"] = { name = "+terminal" },
+			["<leader>u"] = { name = "+utils" },
 		},
 	},
 	config = function(_, opts)

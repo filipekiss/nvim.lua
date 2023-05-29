@@ -4,15 +4,6 @@ return {
 	-- better vim-notify
 	{
 		"https://github.com/rcarriga/nvim-notify",
-		keys = {
-			{
-				"<leader>un",
-				function()
-					require("notify").dismiss({ silent = true, pending = true })
-				end,
-				desc = "Delete all Notifications",
-			},
-		},
 		opts = {
 			timeout = 3000,
 			max_height = function()

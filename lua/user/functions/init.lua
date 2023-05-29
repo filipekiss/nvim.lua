@@ -91,7 +91,15 @@ function M.lazy_notify()
 	timer:start(500, 0, replay)
 end
 
--- taken from AstroVim
+---@class HighlightGroup
+---@field fg string # The fg color
+---@field bg string # The bg color
+---@field ctermfg string # fg color for cterm
+---@field ctermbg string # bg color for cterm
+
+---@param name string # The highlight group name you want the colors for
+---@param fallback? HighlightGroup
+---@return HighlightGroup | {} # A Table with the fg and bg colors for the highlight group or the fallback group if it's not found
 function M.get_hlgroup(name, fallback)
 	if vim.fn.hlexists(name) == 1 then
 		local hl
@@ -106,6 +114,7 @@ function M.get_hlgroup(name, fallback)
 				hl.bg = "NONE"
 			end
 		else
+			---@diagnostic disable-next-line undefined-field
 			hl = vim.api.nvim_get_hl_by_name(name, vim.o.termguicolors)
 			if not hl.foreground then
 				hl.foreground = "NONE"
@@ -120,6 +129,18 @@ function M.get_hlgroup(name, fallback)
 		return hl
 	end
 	return fallback or {}
+end
+
+function M.fg(name)
+	local group = M.get_hlgroup(name)
+	local fg = group.fg or group.ctermfg
+	return fg and { fg = string.format("#%06x", fg) }
+end
+
+function M.bg(name)
+	local group = M.get_hlgroup(name)
+	local bg = group.bg or group.ctermbg
+	return bg and { bg = string.format("#%06x", bg) }
 end
 
 function M.open_vscode(params)
