@@ -7,11 +7,14 @@ return {
 		"https://github.com/hrsh7th/cmp-buffer",
 		"https://github.com/hrsh7th/cmp-path",
 		"https://github.com/saadparwaiz1/cmp_luasnip",
-		"https://github.com/L3MON4D3/LuaSnip",
+		"LuaSnip",
 		"https://github.com/hrsh7th/cmp-omni",
 	},
 	init = function()
 		require("plugins.coding.helpers.ui")
+	end,
+	config = function(_, opts)
+		require("cmp").setup(opts)
 		require("cmp").setup.filetype("DressingInput", {
 			sources = require("cmp").config.sources({ { name = "omni" } }),
 		})

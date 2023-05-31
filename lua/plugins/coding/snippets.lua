@@ -1,5 +1,6 @@
 return {
 	"https://github.com/L3MON4D3/LuaSnip",
+	lazy = true,
 	build = (not jit.os:find("Windows")) and "make install_jsregexp" or nil,
 	dependencies = {
 		"https://github.com/rafamadriz/friendly-snippets",

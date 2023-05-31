@@ -6,7 +6,7 @@ return {
 		dependencies = {
 			"neoconf.nvim",
 			"mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+			"mason-lspconfig.nvim",
 			{
 				"https://github.com/folke/neodev.nvim",
 				opts = { experimental = { pathStrict = true } },
@@ -124,8 +124,8 @@ return {
 	},
 	-- mason lspconfig
 	{
-		"williamboman/mason-lspconfig.nvim",
-		config = true,
+		"https://github.com/williamboman/mason-lspconfig.nvim",
+		lazy = true,
 		opts = {
 			ensure_installed = {
 				"lua_ls",

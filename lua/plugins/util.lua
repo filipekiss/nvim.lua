@@ -15,12 +15,19 @@ return {
 			render = "compact",
 		},
 		init = function()
-			require("idle.helpers.autocmd").create_user_autocmd("VeryLazy", {
-				callback = function()
-					vim.notify = require("notify")
-				end,
-				group = require("idle.helpers.autocmd").augroup("notify", true),
-			})
+			if
+				not require("idle.helpers.plugin").is_installed("noice.nvim")
+			then
+				require("idle.helpers.autocmd").create_user_autocmd("VeryLazy", {
+					callback = function()
+						vim.notify = require("notify")
+					end,
+					group = require("idle.helpers.autocmd").augroup(
+						"notify",
+						true
+					),
+				})
+			end
 
 			local get_hlgroup = Idle.load("functions").get_hlgroup
 			local info = get_hlgroup("DiagnosticInfo")
@@ -68,5 +75,24 @@ return {
 	{
 		"https://github.com/nvim-tree/nvim-web-devicons",
 		lazy = true,
+	},
+	-- enable dot repeat for some commands
+	{ "tpope/vim-repeat", event = "VeryLazy" },
+	-- better ui
+	{
+		"https://github.com/stevearc/dressing.nvim",
+		lazy = true,
+		init = function()
+			---@diagnostic disable-next-line: duplicate-set-field
+			vim.ui.select = function(...)
+				require("lazy").load({ plugins = { "dressing.nvim" } })
+				return vim.ui.select(...)
+			end
+			---@diagnostic disable-next-line: duplicate-set-field
+			vim.ui.input = function(...)
+				require("lazy").load({ plugins = { "dressing.nvim" } })
+				return vim.ui.input(...)
+			end
+		end,
 	},
 }

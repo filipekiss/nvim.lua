@@ -17,19 +17,19 @@ return {
 		},
 		{
 			"<leader><space>",
-			telescope("files"),
+			telescope("files", { cwd = false }),
 			desc = "Find Files (root dir)",
 		},
 		-- find
 		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
 		{
 			"<leader>ff",
-			telescope("files"),
+			telescope("files", { cwd = false }),
 			desc = "Find Files (root dir)",
 		},
 		{
 			"<leader>fF",
-			telescope("files", { cwd = false }),
+			telescope("files"),
 			desc = "Find Files (cwd)",
 		},
 		{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
@@ -161,6 +161,7 @@ return {
 		defaults = {
 			prompt_prefix = " ",
 			selection_caret = " ",
+			file_ignore_patterns = { "nvim/runtime", "share/nvim" },
 			mappings = {
 				i = {
 					["<c-t>"] = function(...)

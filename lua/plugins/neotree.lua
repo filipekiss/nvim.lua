@@ -68,7 +68,6 @@ return {
 			},
 		},
 	},
-	lazy = false,
 	config = function(_, opts)
 		require("neo-tree").setup(opts)
 		vim.api.nvim_create_autocmd("TermClose", {
