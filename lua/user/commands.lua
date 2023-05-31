@@ -69,3 +69,10 @@ add_command("Term", function(params)
 		border = "single",
 	})
 end, { desc = "Open Terminal", bang = true })
+
+add_command("Dashboard", function()
+	pcall(function()
+		local starter = require("mini.starter")
+		starter.open()
+	end)
+end, { desc = "Open the Dashboard" })

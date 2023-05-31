@@ -60,7 +60,7 @@ local lazyOptions = {
 					notify_once = true, -- only notify the first time the root is changed for a buffer in any given window
 				},
 				-- disable smart numbering for the following filetypes and use…
-				nonumber = { "gitcommit" }, -- …nonumber norelativenumber (never show numbers)
+				nonumber = { "gitcommit", "starter" }, -- …nonumber norelativenumber (never show numbers)
 				number = {}, -- …number norelativenumber (always show absolute number)
 				relativenumber = { "man", "help" }, -- …number relativenumber (always show relative numbers)
 				-- icons used by LSP, Completion, etc

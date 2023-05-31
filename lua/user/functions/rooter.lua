@@ -1,18 +1,7 @@
 local Util = require("idle.util")
 local M = {}
 
-local function get_git_dir(path)
-	local git_dir = vim.fn.system(
-		"cd "
-			.. path
-			.. ' && git rev-parse --show-toplevel 2> /dev/null || echo ""'
-	)
-	git_dir = git_dir:gsub(".$", "")
-	if git_dir == "" then
-		return nil
-	end
-	return git_dir
-end
+local get_git_dir = require("user.functions.git").get_git_dir
 
 local function find_root_folder(filename)
 	local current_folder = vim.fn.expand("%:p:h")
