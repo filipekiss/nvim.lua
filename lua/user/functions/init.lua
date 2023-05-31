@@ -167,4 +167,34 @@ function M.float_term(cmd, opts)
 	end
 end
 
+---Use this function to add a depency to any plugin that will modify the
+---sections available in whichkey.nvim
+---
+---Example (options ommited for brevity):
+---```lua
+-- return {
+-- 	"https://github.com/folke/persistence.nvim",
+-- 	dependencies = {
+-- 		add_to_whichkey("persistence.nvim", {
+-- 			["<leader>q"] = { name = "+session" },
+-- 		}),
+-- 	}
+-- }
+---```
+---@param plugin_name string
+---@param sections table<string, table<string, string>>
+---@return table
+function M.add_to_whichkey(plugin_name, sections)
+	return {
+		"which-key.nvim",
+		opts = function(_, opts)
+			if Idle.has_plugin(plugin_name) then
+				return vim.tbl_deep_extend("force", opts, {
+					defaults = sections,
+				})
+			end
+		end,
+	}
+end
+
 return M

@@ -1,20 +1,11 @@
+local add_to_whichkey = require("user.functions").add_to_whichkey
 return {
 	"https://github.com/folke/noice.nvim",
 	event = "VeryLazy",
 	dependencies = {
-		-- which key integration
-		{
-			"which-key.nvim",
-			opts = function(_, opts)
-				if Idle.has_plugin("noice.nvim") then
-					return vim.tbl_deep_extend("force", opts, {
-						defaults = {
-							["<leader>sn"] = { name = "+noice" },
-						},
-					})
-				end
-			end,
-		},
+		add_to_whichkey("noice.nvim", {
+			["<leader>sn"] = { name = "+noice" },
+		}),
 	},
 	opts = {
 		lsp = {
