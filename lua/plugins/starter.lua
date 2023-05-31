@@ -29,7 +29,8 @@ return {
         evaluate_single = true,
         header = logo,
         items = {
-					is_git_repo() and new_section("G Open Lazygit", "Git", "Git") or nil,
+					is_git_repo() and new_section("G Open Lazygit", "Git", "Projects") or nil,
+          new_section("P Show Projects",    "Telescope projects", "Projects"),
           new_section("N New file",     "ene | startinsert",    "Files"),
           new_section("F Find file",    "Telescope find_files", "Files"),
           new_section("R Recent files", "Telescope oldfiles",   "Files"),
