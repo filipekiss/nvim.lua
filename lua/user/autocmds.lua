@@ -64,6 +64,7 @@ autocmd("FileType", {
 			"<CR>:cclose<cr>",
 			{ buffer = event.buf, silent = true }
 		)
+		vim.g.qfix_win = nil
 	end,
 })
 
@@ -92,7 +93,7 @@ autocmd({ "InsertLeave", "BufAdd", "BufEnter", "InsertEnter" }, {
 	end,
 })
 
-autocmd({ "VimEnter", "BufReadPost", "BufEnter" }, {
+autocmd({ "VimEnter", "BufEnter", "BufReadPost" }, {
 	desc = "set project directory",
 	group = augroup("project_dir"),
 	pattern = { "*" },

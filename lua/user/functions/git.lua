@@ -5,9 +5,6 @@ function M.is_git_repo(path)
 end
 
 function M.get_git_dir(path)
-	if not M.is_git_repo(path) then
-		return nil
-	end
 	local git_dir = vim.fn.system(
 		"cd "
 			.. path

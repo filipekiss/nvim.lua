@@ -56,7 +56,14 @@ local lazyOptions = {
 						".git",
 						"package.json",
 					}, -- if this files/folders are found, set as the current root. priority is top to bottom
-					exclude = { "", "help", "man", "gitcommit" }, -- don't run rooter on these filetypes
+					exclude = {
+						"",
+						"help",
+						"man",
+						"gitcommit",
+						"starter",
+						"telescope",
+					}, -- don't run rooter on these filetypes
 					notify_once = true, -- only notify the first time the root is changed for a buffer in any given window
 				},
 				-- disable smart numbering for the following filetypes and use…
