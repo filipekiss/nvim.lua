@@ -35,6 +35,7 @@ return {
           new_section("F Find file",    "Telescope find_files", "Files"),
           new_section("R Recent files", "Telescope oldfiles",   "Files"),
           new_section("T Grep text",    "Telescope live_grep",  "Files"),
+					new_section("E File Explorer", "Neotree", "Files"),
           new_section("I init.lua",     "e $MYVIMRC",           "Config"),
           new_section("L Lazy",         "Lazy",                 "Config"),
           new_section("S Session restore", [[lua require("persistence").load()]], "Session"),

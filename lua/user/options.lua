@@ -40,7 +40,8 @@ opt.wrap = false -- don't wrap text, make it a long line
 opt.wildmenu = true -- enhanced tab completion for the ex command line
 opt.wildmode =
 	"full:longest,list,full", -- complete the longest common part of the word
-	opt.wildignore:append({ -- When completing a command, ignore files that are…
+		---@diagnostic disable-next-line redundant-value
+opt.wildignore:append({ -- When completing a command, ignore files that are…
 		".hg,.git,.svn", -- …from Version control
 		"*.jpg,*.bmp,*.gif,*.png,*.jpeg", -- …binary images
 		"*.o,*.obj,*.exe,*.dll,*.manifest", -- …compiled object files
