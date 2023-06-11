@@ -38,7 +38,7 @@ return {
 					new_section("E File Explorer", "Neotree", "Files"),
           new_section("I init.lua",     "e $MYVIMRC",           "Config"),
           new_section("L Lazy",         "Lazy",                 "Config"),
-          new_section("S Session restore", [[lua require("persistence").load()]], "Session"),
+          new_section("S Session restore", [[lua require("persistence").load({ last=true})]], "Session"),
           new_section("Q Quit",         "qa",                   "Actions"),
         },
         content_hooks = {
