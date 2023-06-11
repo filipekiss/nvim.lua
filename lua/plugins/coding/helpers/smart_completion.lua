@@ -11,9 +11,6 @@ end
 return function(direction)
 	local cmp = require("cmp")
 	local luasnip = require("luasnip")
-	local copilot_suggestion = require("idle.util").safe_require(
-		"copilot.suggestion"
-	)
 	if direction == "previous" then
 		return function(fallback)
 			if cmp.visible() then
@@ -36,9 +33,7 @@ return function(direction)
 		end
 	else
 		return function(fallback)
-			if copilot_suggestion and copilot_suggestion.is_visible() then
-				copilot_suggestion.accept()
-			elseif cmp.visible() then
+			if cmp.visible() then
 				cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 			elseif luasnip.expandable() then
 				luasnip.expand()
