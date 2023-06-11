@@ -12,7 +12,9 @@ return {
 				section_separators = "",
 				theme = "auto",
 				globalstatus = true,
-				disabled_filetypes = {},
+				disabled_filetypes = {
+					winbar = { "starter" },
+				},
 			},
 			sections = {
 				lualine_a = {},
@@ -78,21 +80,6 @@ return {
 							unnamed = "",
 						},
 					},
-					-- stylua: ignore
-					{
-						"%=",
-					},
-					{
-						function()
-							return require("nvim-navic").get_location()
-						end,
-						cond = function()
-							return package.loaded["nvim-navic"]
-								and require("nvim-navic").is_available()
-						end,
-						color = Util.bg("StatusLine"),
-						init = function() end,
-					},
 				},
 				lualine_x = {
 					{
@@ -144,6 +131,18 @@ return {
 				},
 				lualine_y = {
 					{
+						function()
+							return type(Idle.options.icons.harpoon) == "string"
+									and Idle.options.icons.harpoon
+								or "!"
+						end,
+						cond = function()
+							return require("harpoon.mark").get_index_of(
+								vim.fn.bufname()
+							) and true or false
+						end,
+					},
+					{
 						"branch",
 						icon = "",
 						padding = { left = 1, right = 1 },
@@ -157,6 +156,27 @@ return {
 					end,
 				},
 			},
+			winbar = {
+				lualine_c = {
+					{
+						"%=",
+					},
+					{
+						function()
+							return require("nvim-navic").get_location()
+						end,
+						cond = function()
+							return package.loaded["nvim-navic"]
+								and require("nvim-navic").is_available()
+						end,
+						color = Util.bg("Normal"),
+					},
+					{
+						"%=",
+					},
+				},
+			},
+			inactive_winbar = {},
 			extensions = {
 				"neo-tree",
 				require("user.functions.lualine-ext").lazy,

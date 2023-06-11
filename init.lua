@@ -74,6 +74,7 @@ local lazyOptions = {
 				-- icons used by LSP, Completion, etc
 				icons = {
 					mode = "⚡",
+					harpoon = "󱄂",
 					diagnostics = {
 						Error = " ",
 						Warn = " ",
