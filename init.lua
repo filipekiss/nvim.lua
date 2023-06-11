@@ -43,6 +43,7 @@ local lazyOptions = {
 					"qf",
 					"checkhealth",
 					"startuptime",
+					"spectre_panel",
 					-- treesitter panes
 					"tsplayground",
 					"query",
