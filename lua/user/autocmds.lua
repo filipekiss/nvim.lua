@@ -61,10 +61,9 @@ autocmd("FileType", {
 		vim.keymap.set(
 			"n",
 			"<CR>",
-			"<CR>:cclose<cr>",
+			"<CR>:cclose<cr>:lua vim.g.qfix_win=nil<CR>",
 			{ buffer = event.buf, silent = true }
 		)
-		vim.g.qfix_win = nil
 	end,
 })
 

@@ -177,3 +177,13 @@ map("n", "<leader>gg", "<cmd>Git<CR>", "Lazygit (root)")
 map("n", "<leader>gG", "<cmd>Git!<CR>", "Lazygit (cwd)")
 map("n", "<leader>tt", "<cmd>Term<CR>", "Open Terminal (root)")
 map("n", "<leader>tT", "<cmd>Term!<CR>", "Open Terminal (cwd)")
+map("n", "<leader>xl", function()
+	if vim.g.qfix_win then
+		vim.cmd.cclose()
+		vim.g.qfix_win = nil
+	else
+		vim.cmd.copen()
+		---@diagnostic disable-next-line param-type-mismatch
+		vim.g.qfix_win = vim.fn.bufnr("$")
+	end
+end, "Toggle quickfix list")
